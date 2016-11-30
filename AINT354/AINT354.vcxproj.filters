@@ -135,6 +135,18 @@
     <ClCompile Include="levelManagement\RandMap.cpp">
       <Filter>Source Files\Level management</Filter>
     </ClCompile>
+    <ClCompile Include="levelManagement\RoomTemplate.cpp">
+      <Filter>Source Files\Level management</Filter>
+    </ClCompile>
+    <ClCompile Include="levelManagement\MapRoom.cpp">
+      <Filter>Source Files\Level management</Filter>
+    </ClCompile>
+    <ClCompile Include="levelManagement\MiniMap.cpp">
+      <Filter>Source Files\Level management</Filter>
+    </ClCompile>
+    <ClCompile Include="states\MainMenuState.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="states\GameState.h">
@@ -229,6 +241,18 @@
     </ClInclude>
     <ClInclude Include="levelManagement\RandMap.h">
       <Filter>Header Files\Level management</Filter>
+    </ClInclude>
+    <ClInclude Include="levelManagement\RoomTemplate.h">
+      <Filter>Header Files\Level management</Filter>
+    </ClInclude>
+    <ClInclude Include="levelManagement\MapRoom.h">
+      <Filter>Header Files\Level management</Filter>
+    </ClInclude>
+    <ClInclude Include="levelManagement\MiniMap.h">
+      <Filter>Header Files\Level management</Filter>
+    </ClInclude>
+    <ClInclude Include="states\MainMenuState.h">
+      <Filter>Header Files\States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
