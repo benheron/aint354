@@ -29,6 +29,8 @@ bool GameState::eventHandler()
 			{
 			case SDL_BUTTON_LEFT:
 				Utility::log(Utility::I, "Clicking");
+				Vec2 a = randFloor->getCurMap()->getPos();
+				Utility::log(Utility::I, "Room X: " + Utility::intToString(a.x) + ", Room Y : " + Utility::intToString(a.y));
 			}
 			break;
 		case SDL_KEYDOWN:
@@ -88,10 +90,12 @@ void GameState::update(float dt)
 {
 	particles->update(dt);
 
+	mm->update(dt);
+
 
 
 	//just some testing data for moving the player
-	Vec2 curPos = currentMap->player->getPosition();
+	Vec2 curPos = player->getPosition();
 	//Utility::log(Utility::I, "X: " + Utility::floatToString(curPos.x) + "Y: " + Utility::floatToString(curPos.y));
 	Vec2 movement = Vec2(0);
 
@@ -122,15 +126,51 @@ void GameState::update(float dt)
 	//Utility::log(Utility::I, "X: " + Utility::floatToString(normCurPos.x) + " Y: " + Utility::floatToString(normCurPos.y));
 	//Utility::log(Utility::I, "X: " + Utility::floatToString(curPos.x) + " Y: " + Utility::floatToString(curPos.y));
 
-	currentMap->player->setPosition(curPos);
+	player->setPosition(curPos);
+	
+
+
+	Vec2 cm = randFloor->getCurRoomPos();
+	Vec2 cp = player->getPosition();
+
+	if (curPos.x < 0)
+	{
+		randFloor->setCurRoomPos(Vec2((cm.x - 1), cm.y));
+		player->setPosition(Vec2(624.0f, cp.y));
+	}
+
+	if (curPos.x > 640)
+	{
+		randFloor->setCurRoomPos(Vec2((cm.x + 1), cm.y));
+		player->setPosition(Vec2(0.0f, cp.y));
+	}
+
+	if (curPos.y < 0) 
+	{
+		randFloor->setCurRoomPos(Vec2(cm.x, (cm.y-1)));
+		player->setPosition(Vec2(cp.x, 464.0f));
+	}
+
+	if (curPos.y > 480)
+	{
+		randFloor->setCurRoomPos(Vec2(cm.x, (cm.y + 1)));
+		player->setPosition(Vec2(cp.x, 0.0f));
+	}
 }
 
 void GameState::render()
 {
 	//TMP FOR TESTING
-	currentMap->render(platform->getRenderer());
+	randFloor->getCurMap()->render(platform->getRenderer());
+		
+		
+		//currentMap->render(platform->getRenderer());
+	player->render(platform->getRenderer());
 
 	//particles->render(platform);
+
+
+	mm->render(platform->getRenderer());
 }
 
 void GameState::load()
@@ -150,18 +190,28 @@ void GameState::load()
 	mapmng->loadMapData("res/txt/map7.txt", tmp, cmtmp);
 	mapmng->loadMapData("res/txt/map8.txt", tmp, cmtmp);
 
-	//RandMap *randFloor = new RandMap(mapmng);
+	randFloor = new RandMap(mapmng);
 
-	currentMap = mapmng->getRandomMap();
+
+
+	//currentMap = mapmng->getRandomMap();
+	currentMap = randFloor->getCurMap();
+
 
 	//currentMap = mapmng->getMap("M01");
 
-	//currentMap = randFloor->getCurMap();
+
+
 
 	//grab the player type
 	playerType = cmtmp->getCharacterType("P0");
 	//shove the type into the map to create a new player
-	currentMap->loadPlayer(playerType);
+	////currentMap->loadPlayer(playerType);
+
+
+	player = new Character(playerType->getTexture(), Vec2(25, 25), playerType);
+
+
 
 
 
@@ -171,6 +221,10 @@ void GameState::load()
 	particles->setSpeed(15);
 
 	
+
+	mm = new MiniMap(platform->getRenderer());
+	mm->buildMiniMap(randFloor);
+
 	
 }
 

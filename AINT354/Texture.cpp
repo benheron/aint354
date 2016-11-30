@@ -1,6 +1,8 @@
 #include "Texture.h"
 #include "Utility.h"
 
+
+//creates basi
 Texture::Texture(SDL_Renderer* renderer, int r, int g, int b)
 {
 	//Creates the surface

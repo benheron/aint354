@@ -8,7 +8,7 @@
 #include "Map.h"
 #include "MapManager.h"
 #include <Vector>
-
+#include "MapRoom.h"
 
 /**
 @brief Contains all the data and functions dealing with the Map objects.
@@ -49,7 +49,14 @@ public:
 
 	Character *player;
 
-	Map* getCurMap();
+	void setCurRoomPos(Vec2 xy);
+
+	MapRoom* getCurMap();
+
+	Vec2 getCurRoomPos();
+
+
+	std::vector<std::vector<MapRoom*>> getMap();
 
 private:
 	///A vector to hold all of the layer IDs.
@@ -70,10 +77,12 @@ private:
 
 	void createFloor(MapManager *mpmng);
 
-	std::vector<std::vector<Map*>> thisFloor;
+	std::vector<std::vector<MapRoom*>> thisFloor;
 
 
 	bool playerLoaded = false;
+
+	Vec2 curRoomPos;
 
 
 };

@@ -130,6 +130,7 @@ public:
 		y /= b.y;
 		return this;
 	}
+
 	Vec2* operator = (int b)
 	{
 		x = (float)b;

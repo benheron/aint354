@@ -10,6 +10,7 @@
 #include "../entities/creatures/Creature.h"
 #include "../entities/creatures/CreatureManager.h"
 #include "../Utility.h"
+#include "RoomTemplate.h"
 
 /**
 @brief Contains all the data and functions to manage the Map Objects.
@@ -42,21 +43,21 @@ public:
 	@param mapID The ID of the Map to return.
 	@return The Map data.
 	*/
-	Map* getMap(std::string mapID);
+	RoomTemplate* getMap(std::string mapID);
 
 	/**
 	@brief Gets the random Map data
 	@return The Map data.
 	*/
-	Map* getRandomMap();
+	RoomTemplate* getRandomMap();
 
 private:
 	///A vector to hold all of the map IDs.
-	std::vector<std::string> mapIDs;
+	std::vector<std::string> roomIDs;
 	///A vector to hold all of the maps.
-	std::unordered_map<std::string, Map*> maps;
+	std::unordered_map<std::string, RoomTemplate*> roomTemplates;
 
 	///A different vector to hold maps for random lookups
-	std::vector<Map*> rMaps;
+	std::vector<RoomTemplate*> rMaps;
 
 };

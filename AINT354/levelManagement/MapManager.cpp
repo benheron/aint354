@@ -26,12 +26,12 @@ void MapManager::loadMapData(std::string filePath, TileTypeManager* tileTypeMana
 
 	if (mapFile.is_open())
 	{
-		std::string mapID;
+		std::string roomID;
 		Vec2 mapIndexDimensions;
 		int numberOfLayers;
 		Vec2 tileDimensions;
 
-		mapFile >> mapID;
+		mapFile >> roomID;
 		mapFile >> mapIndexDimensions.x;
 		mapFile >> mapIndexDimensions.y;
 		mapFile >> numberOfLayers;
@@ -39,7 +39,7 @@ void MapManager::loadMapData(std::string filePath, TileTypeManager* tileTypeMana
 		mapFile >> tileDimensions.y;
 
 		//store the map ID
-		mapIDs.push_back(mapID);
+		roomIDs.push_back(roomID);
 
 		for (int i = 0; i < numberOfLayers; i++)
 		{
@@ -111,14 +111,14 @@ void MapManager::loadMapData(std::string filePath, TileTypeManager* tileTypeMana
 			Utility::log(Utility::I, "Player spawn coordinates: X: " + Utility::floatToString(playerCoords.x) + " Y: " + Utility::floatToString(playerCoords.y));
 		}
 		else {
-			Utility::log(Utility::E,"Shit, we're corrupt");
+			Utility::log(Utility::E, "Shit, we're corrupt");
 		}
 		mapFile.close();
 
 		//Store the map
-		maps[mapID] = new Map(mapTiles, mapCreatures, layerIDs, playerCoords);
+		roomTemplates[roomID] = new RoomTemplate(mapTiles, mapCreatures, layerIDs, playerCoords);
 
-		rMaps.push_back(new Map(mapTiles, mapCreatures, layerIDs, playerCoords));
+		rMaps.push_back(new RoomTemplate(mapTiles, mapCreatures, layerIDs, playerCoords));
 
 		Utility::log(Utility::I, "Map data loaded");
 	}
@@ -129,12 +129,12 @@ void MapManager::loadMapData(std::string filePath, TileTypeManager* tileTypeMana
 	}
 }
 
-Map* MapManager::getMap(std::string mapID)
+RoomTemplate* MapManager::getMap(std::string mapID)
 {
-	return maps[mapID];
+	return roomTemplates[mapID];
 }
 
-Map* MapManager::getRandomMap()
+RoomTemplate* MapManager::getRandomMap()
 {
 	return rMaps[Utility::randomInt(0, (rMaps.size() - 1))];
 }

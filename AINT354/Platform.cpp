@@ -41,10 +41,11 @@ bool Platform::initSDL(int imageInitFlags, int mixerInitFlags)
 	if (!androidInit()) { return false; }
 	
 #else
-	
+	//640
+	//480
 	window = SDL_CreateWindow(windowTitle.c_str(),
 	SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-	640, 480,
+	960, 540,
 	SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 
 	renderer = SDL_CreateRenderer(window, -1, 0);

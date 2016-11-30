@@ -8,6 +8,9 @@
 #include "../entities/particles/ParticleSystem.h"
 #include "../entities/creatures/CreatureManager.h"
 #include "../levelManagement/RandMap.h"
+#include "../levelManagement/MapRoom.h"
+
+#include "../levelManagement/MiniMap.h"
 
 //#include "..entities/creatures/Character.h"
 
@@ -62,11 +65,21 @@ protected:
 	virtual void unload();
 
 	//TMP FOR TESTING
-	Map *currentMap;
+	RandMap *randFloor;
+	MapRoom *currentMap;
 
 	CharacterType *playerType;
 
 	ParticleSystem* particles;
+
+	Character *player;
+
+
+	MiniMap* mm;
+
+
+
+
 
 
 	bool kUp = false, kDown = false, kLeft = false, kRight = false;
