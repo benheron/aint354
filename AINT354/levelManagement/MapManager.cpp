@@ -99,19 +99,19 @@ void MapManager::loadMapData(std::string filePath, TileTypeManager* tileTypeMana
 						std::string creatureID;
 						mapFile >> creatureID;
 
-						if (creatureID != "XX")
-						{
-							Vec2 pos = Vec2((x * tileDimensions.x), (y * tileDimensions.y));
+						//if (creatureID != "XX")
+						//{
+						/*	Vec2 pos = Vec2((x * tileDimensions.x), (y * tileDimensions.y));
 
 							CreatureType* creatureType = creatureManager->getCreatureType(creatureID);
 							Vec2 spriteDimensions = creatureType->getSpriteDimensions();
 							Texture* creatureTexture = creatureType->getTexture();
 
 							mapCreatures.push_back(
-								new Creature(creatureTexture, pos, spriteDimensions, creatureType));
+								new Creature(creatureTexture, pos, spriteDimensions, creatureType));*/
 
 							mapCreatureStrings.push_back(creatureID);
-						}
+						//}
 					}
 				}
 				
@@ -129,7 +129,7 @@ void MapManager::loadMapData(std::string filePath, TileTypeManager* tileTypeMana
 			Utility::log(Utility::I, "Player spawn coordinates: X: " + Utility::floatToString(playerCoords.x) + " Y: " + Utility::floatToString(playerCoords.y));
 		}
 		else {
-			Utility::log(Utility::E, "Shit, we're corrupt");
+			Utility::log(Utility::E, "Dammit, we're corrupt");
 		}
 		mapFile.close();
 

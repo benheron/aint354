@@ -93,9 +93,10 @@ void RandMap::createFloor(MapManager *mpmng, TileTypeManager *ttmng, CreatureMan
 	currentRooms.push_back(firstRoom);
 
 	curRoomPos = Vec2(maxSize/2, maxSize/2);
-
-	for (int i = 0; i < numRooms - 1; i++)
+	int c = 0;
+	for (int i = 0; i < numRooms; i++)
 	{
+		c++;
 		bool addedRoom = false;
 		while (!addedRoom)
 		{
@@ -191,7 +192,7 @@ void RandMap::createFloor(MapManager *mpmng, TileTypeManager *ttmng, CreatureMan
 	}
 
 
-
+	int d = c;
 
 }
 

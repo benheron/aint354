@@ -1,15 +1,4 @@
-﻿  MapManager.cpp
-  Generating Code...
-  Compiling...
-  GameState.cpp
-d:\assignments\aint354\aint354\project\aint354\aint354\states\gamestate.cpp(33): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  MainMenuState.cpp
-  EditorState.cpp
-  main.cpp
-  RandMap.cpp
-  MiniMap.cpp
-  MapRoom.cpp
+﻿  MapRoom.cpp
+d:\assignments\aint354\aint354\project\aint354\aint354\levelmanagement\maproom.cpp(18): warning C4800: 'int': forcing value to bool 'true' or 'false' (performance warning)
   AINT354.vcxproj -> D:\assignments\AINT354\AINT354\project\AINT354\Debug\AINT354.exe
   AINT354.vcxproj -> D:\assignments\AINT354\AINT354\project\AINT354\Debug\AINT354.pdb (Full PDB)

@@ -9,7 +9,10 @@ MainMenuState::MainMenuState(StateManager* manager, Platform *platform)
 
 MainMenuState::~MainMenuState()
 {
-
+	delete buttonBgrRed;
+	delete buttonBgrGreen;
+	delete redPlay;
+	delete greenEdit;
 }
 
 bool MainMenuState::eventHandler()

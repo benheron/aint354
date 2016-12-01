@@ -22,7 +22,7 @@ public:
 
 
 
-	RoomTemplate(std::unordered_map<std::string, std::vector<std::vector<std::string>>> mapTilesData, std::vector<std::string> mapCreaturesData, std::vector<std::string> layerIDs);
+	RoomTemplate(std::unordered_map<std::string, std::vector<std::vector<std::string>>> mapTilesData, std::vector<std::string> roomCreaturesData, std::vector<std::string> layerIDs);
 
 
 	RoomTemplate::RoomTemplate(std::unordered_map<std::string, std::vector<std::vector<Tile*>>> mapTiles, std::vector<Creature*> mapCreatures, std::vector<std::string> layerIDs, Vec2 spawnPoint, Vec2 mapPos);

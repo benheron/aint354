@@ -168,6 +168,7 @@
     <ClCompile Include="levelManagement\MapManager.cpp" />
     <ClCompile Include="levelManagement\MapRoom.cpp" />
     <ClCompile Include="levelManagement\MiniMap.cpp" />
+    <ClCompile Include="levelManagement\MiniMapIcon.cpp" />
     <ClCompile Include="levelManagement\RandMap.cpp" />
     <ClCompile Include="levelManagement\RoomTemplate.cpp" />
     <ClCompile Include="levelManagement\Tile.cpp" />
@@ -207,6 +208,7 @@
     <ClInclude Include="levelManagement\MapManager.h" />
     <ClInclude Include="levelManagement\MapRoom.h" />
     <ClInclude Include="levelManagement\MiniMap.h" />
+    <ClInclude Include="levelManagement\MiniMapIcon.h" />
     <ClInclude Include="levelManagement\RandMap.h" />
     <ClInclude Include="levelManagement\RoomTemplate.h" />
     <ClInclude Include="levelManagement\Tile.h" />

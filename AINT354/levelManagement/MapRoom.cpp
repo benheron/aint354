@@ -64,12 +64,14 @@ void MapRoom::createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureMana
 		std::string layerID = layerIDs[i];
 
 
-		int ySize = roomData[layerID].size();
+		int ySize = roomData["B"].size();
+
 
 
 		for (int y = 0; y < ySize; y++)
 		{
-			int xSize = roomData[layerID][y].size();
+			int xSize = roomData["B"][0].size();
+
 			if (layerID == "O" || layerID == "B")
 			{
 				std::vector<Tile*> tiles;
@@ -99,7 +101,6 @@ void MapRoom::createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureMana
 				//mapCreatures[layerID].push_back(creatures);
 				for (int x = 0; x < xSize; x++)
 				{
-					c++;
 					//Get the creature
 					std::string creatureID = creatureData[c];
 
@@ -113,7 +114,9 @@ void MapRoom::createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureMana
 
 						roomCreatures.push_back(
 							new Creature(creatureTexture, pos, spriteDimensions, creatureType));
+						
 					}
+					c++;
 				}
 			}
 
