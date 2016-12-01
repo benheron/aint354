@@ -6,6 +6,7 @@
 
 #include "../Texture.h"
 #include "../Vec2.h"
+#include "MiniMapIcon.h"
 
 class MiniMap
 {
@@ -30,9 +31,14 @@ public:
 protected:
 	std::vector<std::vector<int>> map;
 
+	std::vector<std::vector<MiniMapIcon*>> map2;
+
 
 	Texture *tmpTexture;
 	Texture *roomOnTexture;
+
+	Texture *mapIcon;
+
 
 
 	Vec2 curRoomPos;
