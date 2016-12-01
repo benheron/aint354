@@ -5,6 +5,7 @@
 #include "states/StateManager.h"
 
 #include "states/GameState.h"
+#include "states/MainMenuState.h"
 
 int main(int argc, char *argv[]);
 
@@ -14,6 +15,7 @@ int main(int argc, char *argv[])
 
 	int imageFormats = IMG_INIT_JPG | IMG_INIT_PNG;
 	int mixerFormats = MIX_INIT_MP3 | MIX_INIT_OGG;
+
 
 	if (!platform->initSDL(imageFormats, mixerFormats))
 	{
@@ -32,7 +34,8 @@ int main(int argc, char *argv[])
 	unsigned int lastTime = SDL_GetTicks();
 
 
-	manager->addState(new GameState(manager, platform));
+	//manager->addState(new GameState(manager, platform));
+	manager->addState(new MainMenuState(manager, platform));
 
 	bool done = false;
 

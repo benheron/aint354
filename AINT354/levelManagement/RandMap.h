@@ -28,6 +28,14 @@ public:
 	RandMap(MapManager *mpmn);
 
 	/**
+	@brief Creates a randomised number of maps.
+	@param mpmn The Map Manager
+	@param ttmng The TileType Manager
+	@param cmng The Creature Manager
+	*/
+	RandMap(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng);
+
+	/**
 	@brief Map destructor.
 	*/
 	~RandMap();
@@ -75,7 +83,7 @@ private:
 
 
 
-	void createFloor(MapManager *mpmng);
+	void createFloor(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng);
 
 	std::vector<std::vector<MapRoom*>> thisFloor;
 

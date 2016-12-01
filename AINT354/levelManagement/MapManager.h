@@ -60,4 +60,7 @@ private:
 	///A different vector to hold maps for random lookups
 	std::vector<RoomTemplate*> rMaps;
 
+
+
+
 };

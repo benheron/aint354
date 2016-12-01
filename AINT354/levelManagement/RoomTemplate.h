@@ -21,6 +21,10 @@ public:
 	RoomTemplate(std::unordered_map<std::string, std::vector<std::vector<Tile*>>> mapTiles, std::vector<Creature*> mapCreatures, std::vector<std::string> layerIDs, Vec2 spawnPoint);
 
 
+
+	RoomTemplate(std::unordered_map<std::string, std::vector<std::vector<std::string>>> mapTilesData, std::vector<std::string> mapCreaturesData, std::vector<std::string> layerIDs);
+
+
 	RoomTemplate::RoomTemplate(std::unordered_map<std::string, std::vector<std::vector<Tile*>>> mapTiles, std::vector<Creature*> mapCreatures, std::vector<std::string> layerIDs, Vec2 spawnPoint, Vec2 mapPos);
 
 
@@ -62,6 +66,12 @@ public:
 
 	std::vector<Creature*> getCreatures();
 
+
+
+	std::unordered_map<std::string, std::vector<std::vector<std::string>>> getRoomTileData();
+
+	std::vector<std::string> getCreatureData();
+
 	
 
 private:
@@ -90,6 +100,18 @@ private:
 	Vec2 mapPos;
 
 	bool access = false;
+
+
+
+
+	///A 3D vector that contains all of the tiles. [Layer ID][Y Index][X Index]
+	std::unordered_map<std::string, std::vector<std::vector<std::string>>> roomTilesData;
+
+	//An unordered map that contains all of the creatures. [Layer ID][Y Index][X Index]
+	//std::unordered_map<std::string, Creature*> mapCreatures;
+
+	///A vector of all creatures
+	std::vector<std::string> roomCreaturesData;
 
 
 };

@@ -4,6 +4,10 @@ RoomTemplate::RoomTemplate(std::unordered_map<std::string, std::vector<std::vect
 {
 }
 
+RoomTemplate::RoomTemplate(std::unordered_map<std::string, std::vector<std::vector<std::string>>> roomTilesData, std::vector<std::string> mapCreaturesData, std::vector<std::string> layerIDs) : roomTilesData(roomTilesData), roomCreaturesData(roomCreaturesData), layerIDs(layerIDs), spawnPoint(spawnPoint)
+{
+}
+
 RoomTemplate::RoomTemplate(std::unordered_map<std::string, std::vector<std::vector<Tile*>>> roomTiles, std::vector<Creature*> roomCreatures, std::vector<std::string> layerIDs, Vec2 spawnPoint, Vec2 mapPos) : roomTiles(roomTiles), roomCreatures(roomCreatures), layerIDs(layerIDs), spawnPoint(spawnPoint), mapPos(mapPos)
 {
 }
@@ -96,3 +100,12 @@ std::vector<Creature*> RoomTemplate::getCreatures()
 	return roomCreatures;
 }
 
+std::unordered_map<std::string, std::vector<std::vector<std::string>>> RoomTemplate::getRoomTileData()
+{
+	return roomTilesData;
+}
+
+std::vector<std::string> RoomTemplate::getCreatureData()
+{
+	return roomCreaturesData;
+}

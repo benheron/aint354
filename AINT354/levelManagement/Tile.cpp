@@ -21,3 +21,4 @@ void Tile::render(SDL_Renderer *renderer)
 		tileType->render(renderer, pos, dimensions);
 	}
 }
+

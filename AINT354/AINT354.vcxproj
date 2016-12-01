@@ -152,6 +152,7 @@
     <ClCompile Include="audio\Audio.cpp" />
     <ClCompile Include="audio\Music.cpp" />
     <ClCompile Include="audio\SFX.cpp" />
+    <ClCompile Include="entities\Button.cpp" />
     <ClCompile Include="entities\creatures\Character.cpp" />
     <ClCompile Include="entities\creatures\CharacterManager.cpp" />
     <ClCompile Include="entities\creatures\CharacterType.cpp" />
@@ -174,6 +175,7 @@
     <ClCompile Include="levelManagement\TileTypeManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="states\EditorState.cpp" />
     <ClCompile Include="states\GameState.cpp" />
     <ClCompile Include="states\MainMenuState.cpp" />
     <ClCompile Include="states\State.cpp" />
@@ -189,6 +191,7 @@
     <ClInclude Include="dependencies\SDL_image.h" />
     <ClInclude Include="dependencies\SDL_mixer.h" />
     <ClInclude Include="dependencies\SDL_ttf.h" />
+    <ClInclude Include="entities\Button.h" />
     <ClInclude Include="entities\creatures\Character.h" />
     <ClInclude Include="entities\creatures\CharacterManager.h" />
     <ClInclude Include="entities\creatures\CharacterType.h" />
@@ -210,6 +213,8 @@
     <ClInclude Include="levelManagement\TileType.h" />
     <ClInclude Include="levelManagement\TileTypeManager.h" />
     <ClInclude Include="Platform.h" />
+    <ClInclude Include="screenElements\ScreenElement.h" />
+    <ClInclude Include="states\EditorState.h" />
     <ClInclude Include="states\GameState.h" />
     <ClInclude Include="states\MainMenuState.h" />
     <ClInclude Include="states\State.h" />

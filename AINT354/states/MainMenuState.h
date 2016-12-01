@@ -1,6 +1,12 @@
 #pragma once
 
 #include "State.h"
+#include "../Platform.h"
+#include "StateManager.h"
+#include "../entities/Button.h"
+#include "../Texture.h"
+#include "GameState.h"
+#include "EditorState.h"
 
 /**
 @class MainMenuState
@@ -51,4 +57,15 @@ protected:
 	@brief Unloads this State.
 	*/
 	virtual void unload();
+
+
+	Texture *buttonBgrRed;
+	Texture *buttonBgrGreen;
+
+	Button *redPlay;
+	Button *greenEdit;
+
+
+	bool redDown = false;
+	bool greenDown = false;
 };

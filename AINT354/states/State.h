@@ -1,6 +1,7 @@
 #include <string>
 #include "../Platform.h"
 
+
 #pragma once
 
 class StateManager;

@@ -163,11 +163,7 @@ void GameState::render()
 	//TMP FOR TESTING
 	randFloor->getCurMap()->render(platform->getRenderer());
 		
-		
-		//currentMap->render(platform->getRenderer());
 	player->render(platform->getRenderer());
-
-	//particles->render(platform);
 
 
 	mm->render(platform->getRenderer());
@@ -190,7 +186,11 @@ void GameState::load()
 	mapmng->loadMapData("res/txt/map7.txt", tmp, cmtmp);
 	mapmng->loadMapData("res/txt/map8.txt", tmp, cmtmp);
 
-	randFloor = new RandMap(mapmng);
+	//randFloor = new RandMap(mapmng);
+
+
+
+	randFloor = new RandMap(mapmng, tmp, cmtmp);
 
 
 

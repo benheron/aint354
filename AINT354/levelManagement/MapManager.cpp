@@ -20,6 +20,10 @@ void MapManager::loadMapData(std::string filePath, TileTypeManager* tileTypeMana
 	//std::unordered_map<std::string, std::vector<std::vector<Creature*>>> mapCreatures;
 	std::vector<Creature*> mapCreatures;
 
+
+	std::unordered_map<std::string, std::vector<std::vector<std::string>>> mapTileStrings;
+	std::vector<std::string> mapCreatureStrings;
+
 	Utility::log(Utility::I, "Loading map data : " + filePath);
 
 	std::ifstream mapFile(filePath);
@@ -55,8 +59,14 @@ void MapManager::loadMapData(std::string filePath, TileTypeManager* tileTypeMana
 					std::vector<Tile*> tiles;
 					mapTiles[layerID].push_back(tiles);
 
+					//text version
+					std::vector<std::string> tileStrings;
+					mapTileStrings[layerID].push_back(tileStrings);
+
 					for (int x = 0; x < mapIndexDimensions.x; x++)
 					{
+
+
 						//Get the tile
 						std::string tileID;
 						mapFile >> tileID;
@@ -70,7 +80,13 @@ void MapManager::loadMapData(std::string filePath, TileTypeManager* tileTypeMana
 						//Store tile
 						mapTiles[layerID][y].push_back(
 							new Tile(tileTexture, Vec2((x * tileDimensions.x), (y * tileDimensions.y)), tileDimensions, spritePos, spriteDimensions, tileType)
-							);
+						);
+						
+
+
+
+						//store tile text version
+						mapTileStrings[layerID][y].push_back(tileID);
 					}
 				}
 				else if (layerID == "C")
@@ -93,6 +109,8 @@ void MapManager::loadMapData(std::string filePath, TileTypeManager* tileTypeMana
 
 							mapCreatures.push_back(
 								new Creature(creatureTexture, pos, spriteDimensions, creatureType));
+
+							mapCreatureStrings.push_back(creatureID);
 						}
 					}
 				}
@@ -116,9 +134,11 @@ void MapManager::loadMapData(std::string filePath, TileTypeManager* tileTypeMana
 		mapFile.close();
 
 		//Store the map
-		roomTemplates[roomID] = new RoomTemplate(mapTiles, mapCreatures, layerIDs, playerCoords);
+	/*	roomTemplates[roomID] = new RoomTemplate(mapTiles, mapCreatures, layerIDs, playerCoords);*/
 
-		rMaps.push_back(new RoomTemplate(mapTiles, mapCreatures, layerIDs, playerCoords));
+		//rMaps.push_back(new RoomTemplate(mapTiles, mapCreatures, layerIDs, playerCoords));
+
+		rMaps.push_back(new RoomTemplate(mapTileStrings, mapCreatureStrings, layerIDs));
 
 		Utility::log(Utility::I, "Map data loaded");
 	}

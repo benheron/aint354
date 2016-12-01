@@ -8,8 +8,15 @@ RandMap::RandMap()
 RandMap::RandMap(MapManager *mpmng)
 {
 	curRoomPos = Vec2(4, 4);
-	createFloor(mpmng);
+	//createFloor(mpmng);
 }
+
+RandMap::RandMap(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng)
+{
+	curRoomPos = Vec2(4, 4);
+	createFloor(mpmng, ttmng, cmng);
+}
+
 
 RandMap::~RandMap()
 {
@@ -45,7 +52,7 @@ void RandMap::setCurRoomPos(Vec2 xy)
 
 }
 
-void RandMap::createFloor(MapManager *mpmng)
+void RandMap::createFloor(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng)
 {
 
 	int test[5][5] = {
@@ -80,7 +87,7 @@ void RandMap::createFloor(MapManager *mpmng)
 	std::vector<MapRoom*> currentRooms;
 
 	MapRoom *firstRoom = thisFloor[maxSize / 2][ maxSize / 2];
-	firstRoom->createRoom(mpmng, Vec2(maxSize / 2, maxSize / 2));
+	firstRoom->createRoom(mpmng, ttmng, cmng, Vec2(maxSize / 2, maxSize / 2));
 		
 	//new MapRoom(mpmng, Vec2(maxSize / 2, maxSize / 2), 1);
 	currentRooms.push_back(firstRoom);
@@ -119,7 +126,7 @@ void RandMap::createFloor(MapManager *mpmng)
 					if (!thisFloor[thisRoomPos.x][thisRoomPos.y - 1]->getAccess())
 					{
 						nMap = thisFloor[thisRoomPos.x][thisRoomPos.y - 1];
-						nMap->createRoom(mpmng, Vec2(thisRoomPos.x, thisRoomPos.y - 1));
+						nMap->createRoom(mpmng, ttmng, cmng, Vec2(thisRoomPos.x, thisRoomPos.y - 1));
 						nMap->setAccess(true);
 						currentRooms.push_back(nMap);
 						addedRoom = true;
@@ -135,7 +142,7 @@ void RandMap::createFloor(MapManager *mpmng)
 					if (!thisFloor[thisRoomPos.x + 1][thisRoomPos.y]->getAccess())
 					{
 						nMap = thisFloor[thisRoomPos.x + 1][thisRoomPos.y];
-						nMap->createRoom(mpmng, Vec2(thisRoomPos.x + 1, thisRoomPos.y));
+						nMap->createRoom(mpmng, ttmng, cmng, Vec2(thisRoomPos.x + 1, thisRoomPos.y));
 						nMap->setAccess(true);
 						currentRooms.push_back(nMap);
 						addedRoom = true;
@@ -152,7 +159,7 @@ void RandMap::createFloor(MapManager *mpmng)
 					if (!thisFloor[thisRoomPos.x][thisRoomPos.y + 1]->getAccess())
 					{
 						nMap = thisFloor[thisRoomPos.x][thisRoomPos.y + 1];
-						nMap->createRoom(mpmng, Vec2(thisRoomPos.x, thisRoomPos.y + 1));
+						nMap->createRoom(mpmng, ttmng, cmng, Vec2(thisRoomPos.x, thisRoomPos.y + 1));
 						nMap->setAccess(true);
 						currentRooms.push_back(nMap);
 						addedRoom = true;
@@ -168,7 +175,7 @@ void RandMap::createFloor(MapManager *mpmng)
 					if (!thisFloor[thisRoomPos.x - 1][thisRoomPos.y]->getAccess())
 					{
 						nMap = thisFloor[thisRoomPos.x - 1][thisRoomPos.y];
-						nMap->createRoom(mpmng, Vec2(thisRoomPos.x - 1, thisRoomPos.y));
+						nMap->createRoom(mpmng, ttmng, cmng, Vec2(thisRoomPos.x - 1, thisRoomPos.y));
 						nMap->setAccess(true);
 						currentRooms.push_back(nMap);
 						addedRoom = true;

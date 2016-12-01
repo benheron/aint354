@@ -1,12 +1,15 @@
-﻿  RandMap.cpp
-d:\assignments\aint354\aint354\project\aint354\aint354\levelmanagement\randmap.cpp(34): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-d:\assignments\aint354\aint354\project\aint354\aint354\levelmanagement\randmap.cpp(119): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-d:\assignments\aint354\aint354\project\aint354\aint354\levelmanagement\randmap.cpp(121): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-d:\assignments\aint354\aint354\project\aint354\aint354\levelmanagement\randmap.cpp(135): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-d:\assignments\aint354\aint354\project\aint354\aint354\levelmanagement\randmap.cpp(137): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-d:\assignments\aint354\aint354\project\aint354\aint354\levelmanagement\randmap.cpp(152): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-d:\assignments\aint354\aint354\project\aint354\aint354\levelmanagement\randmap.cpp(154): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-d:\assignments\aint354\aint354\project\aint354\aint354\levelmanagement\randmap.cpp(168): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-d:\assignments\aint354\aint354\project\aint354\aint354\levelmanagement\randmap.cpp(170): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+﻿  MapManager.cpp
+  Generating Code...
+  Compiling...
+  GameState.cpp
+d:\assignments\aint354\aint354\project\aint354\aint354\states\gamestate.cpp(33): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  MainMenuState.cpp
+  EditorState.cpp
+  main.cpp
+  RandMap.cpp
+  MiniMap.cpp
+  MapRoom.cpp
   AINT354.vcxproj -> D:\assignments\AINT354\AINT354\project\AINT354\Debug\AINT354.exe
   AINT354.vcxproj -> D:\assignments\AINT354\AINT354\project\AINT354\Debug\AINT354.pdb (Full PDB)

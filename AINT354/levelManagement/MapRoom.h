@@ -38,7 +38,7 @@ public:
 	void render(SDL_Renderer* renderer);
 
 
-	void createRoom(MapManager *mpmng, Vec2 pos);
+	void createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng, Vec2 pos);
 
 	void loadPlayer(CharacterType *pt);
 
