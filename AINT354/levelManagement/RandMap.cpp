@@ -2,7 +2,8 @@
 
 RandMap::RandMap()
 {
-//	createFloor();
+	createEmptyFloor();
+	curRoomPos = Vec2(0, 0);
 }
 
 RandMap::RandMap(MapManager *mpmng)
@@ -88,15 +89,14 @@ void RandMap::createFloor(MapManager *mpmng, TileTypeManager *ttmng, CreatureMan
 
 	MapRoom *firstRoom = thisFloor[maxSize / 2][ maxSize / 2];
 	firstRoom->createRoom(mpmng, ttmng, cmng, Vec2(maxSize / 2, maxSize / 2));
+	firstRoom->setAccess(true);
 		
 	//new MapRoom(mpmng, Vec2(maxSize / 2, maxSize / 2), 1);
 	currentRooms.push_back(firstRoom);
 
 	curRoomPos = Vec2(maxSize/2, maxSize/2);
-	int c = 0;
 	for (int i = 0; i < numRooms; i++)
 	{
-		c++;
 		bool addedRoom = false;
 		while (!addedRoom)
 		{
@@ -191,13 +191,24 @@ void RandMap::createFloor(MapManager *mpmng, TileTypeManager *ttmng, CreatureMan
 
 	}
 
-
-	int d = c;
-
 }
 
 
 std::vector<std::vector<MapRoom*>> RandMap::getMap()
 {
 	return thisFloor;
+}
+
+void RandMap::createEmptyFloor()
+{
+	int maxSize = 10;
+
+	for (int i = 0; i < maxSize; i++)
+	{
+		std::vector<MapRoom*> tmpV;
+		thisFloor.push_back(tmpV);
+		for (int j = 0; j < maxSize; j++) {
+			thisFloor[i].push_back(new MapRoom());
+		}
+	}
 }

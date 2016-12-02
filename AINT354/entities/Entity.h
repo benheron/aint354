@@ -24,6 +24,20 @@ public:
 	*/
 	Entity(Texture* texture, Vec2 pos, Vec2 dimensions);
 
+
+
+	/**
+	@brief Create the Entity with a sprite from a spritesheet. Use this one for quick parts of images
+	@param texture A pointer to the Texture.
+	@param pos The position of the Entity.
+	@param dimensions The dimensions of the Entity.
+	@param spritePos The position of the sprite in the spritesheet.
+	*/
+	Entity(Texture* texture, Vec2 pos, Vec2 dimensions, Vec2 spritePos);
+
+
+
+
 	/**
 	@brief Create the Entity with a sprite from a spritesheet.
 	@param texture A pointer to the Texture.
@@ -72,6 +86,11 @@ public:
 	@return The dimensions of the Entity.
 	*/
 	Vec2 getDimensions();
+
+
+
+
+	bool mouseCollide(int mouseX, int mouseY);
 
 protected:
 	///The XY position of the Entity.

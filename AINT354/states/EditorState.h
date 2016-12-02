@@ -1,10 +1,19 @@
 #pragma once
 
 #include "State.h"
-#include "../Platform.h"
 #include "StateManager.h"
+#include "../Platform.h"
 #include "../Texture.h"
 #include "GameState.h"
+#include "../entities/particles/ParticleSystem.h"
+#include "../entities/creatures/CreatureManager.h"
+#include "../levelManagement/RandMap.h"
+#include "../levelManagement/MapRoom.h"
+#include "../levelManagement/TileTypeManager.h"
+#include "../levelManagement/MapManager.h"
+#include "../levelManagement/Map.h"
+
+#
 
 /**
 @class EditorState
@@ -55,5 +64,12 @@ protected:
 	@brief Unloads this State.
 	*/
 	virtual void unload();
+
+
+	Texture *white;
+
+	RandMap *randFloor;
+	MapRoom *currentMap;
+	MiniMap* mm;
 
 };

@@ -1,13 +1,19 @@
 #include "Button.h"
 
 
-Button::Button(Texture* texture, Vec2 pos, std::string text) : Entity(texture, pos)
+Button::Button(Texture* texture, Vec2 pos) : Entity(texture, pos)
 {
 
 
 }
 
 Button::Button(Texture* texture, Vec2 pos, Vec2 dimensions) : Entity(texture, pos, dimensions)
+{
+
+}
+
+
+Button::Button(Texture* texture, Vec2 pos, Vec2 dimensions, Vec2 spritePos) : Entity(texture, pos, dimensions, spritePos)
 {
 
 }
@@ -26,21 +32,25 @@ void Button::update(float dt)
 {
 }
 
+
 void Button::render(SDL_Renderer *renderer)
 {
-	texture->pushToScreen(renderer, pos, dimensions);
+	if (hover) {
+		texture->pushSpriteToScreen(renderer, pos, Vec2(spritePos.x, spriteDimensions.y), spriteDimensions);
+	}
+	else {
+		texture->pushSpriteToScreen(renderer, pos, spritePos, spriteDimensions);
+	}
+	
 }
 
-bool Button::mouseCollide(int mouseX, int mouseY)
+
+bool Button::isHover()
 {
-	if (mouseX > pos.x &&
-		mouseX < (pos.x + dimensions.x) &&
-		mouseY > pos.y &&
-		mouseY < (pos.y + dimensions.y))
-	{
-		return true;
-	}
-	return false;
+	return hover;
+}
 
-
+void Button::setHover(bool h)
+{
+	hover = h;
 }

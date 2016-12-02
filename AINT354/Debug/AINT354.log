@@ -1,11 +1,5 @@
-﻿  MiniMap.cpp
-d:\assignments\aint354\aint354\project\aint354\aint354\levelmanagement\minimap.cpp(28): warning C4018: '<': signed/unsigned mismatch
-d:\assignments\aint354\aint354\project\aint354\aint354\levelmanagement\minimap.cpp(35): warning C4018: '<': signed/unsigned mismatch
-d:\assignments\aint354\aint354\project\aint354\aint354\levelmanagement\minimap.cpp(57): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-d:\assignments\aint354\aint354\project\aint354\aint354\levelmanagement\minimap.cpp(59): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-d:\assignments\aint354\aint354\project\aint354\aint354\levelmanagement\minimap.cpp(64): warning C4018: '<': signed/unsigned mismatch
-d:\assignments\aint354\aint354\project\aint354\aint354\levelmanagement\minimap.cpp(66): warning C4018: '<': signed/unsigned mismatch
-d:\assignments\aint354\aint354\project\aint354\aint354\levelmanagement\minimap.cpp(82): warning C4018: '<': signed/unsigned mismatch
-d:\assignments\aint354\aint354\project\aint354\aint354\levelmanagement\minimap.cpp(84): warning C4018: '<': signed/unsigned mismatch
+﻿  MainMenuState.cpp
+d:\assignments\aint354\aint354\project\aint354\aint354\states\mainmenustate.cpp(28): warning C4018: '<': signed/unsigned mismatch
+d:\assignments\aint354\aint354\project\aint354\aint354\states\mainmenustate.cpp(79): warning C4065: switch statement contains 'default' but no 'case' labels
   AINT354.vcxproj -> D:\assignments\AINT354\AINT354\project\AINT354\Debug\AINT354.exe
   AINT354.vcxproj -> D:\assignments\AINT354\AINT354\project\AINT354\Debug\AINT354.pdb (Full PDB)

@@ -186,19 +186,10 @@ void GameState::load()
 	mapmng->loadMapData("res/txt/map7.txt", tmp, cmtmp);
 	mapmng->loadMapData("res/txt/map8.txt", tmp, cmtmp);
 
-	//randFloor = new RandMap(mapmng);
-
 
 
 	randFloor = new RandMap(mapmng, tmp, cmtmp);
-
-
-
-	//currentMap = mapmng->getRandomMap();
 	currentMap = randFloor->getCurMap();
-
-
-	//currentMap = mapmng->getMap("M01");
 
 
 
@@ -223,7 +214,7 @@ void GameState::load()
 	
 
 	mm = new MiniMap(platform->getRenderer());
-	mm->buildMiniMap(randFloor);
+	mm->buildMiniMap(randFloor, Vec2(700, 50));
 
 	
 }

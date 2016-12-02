@@ -93,4 +93,8 @@ private:
 	Vec2 curRoomPos;
 
 
+
+	void createEmptyFloor();
+
+
 };

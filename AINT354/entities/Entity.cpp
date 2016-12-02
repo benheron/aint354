@@ -13,6 +13,12 @@ Entity::Entity(Texture* texture, Vec2 pos, Vec2 dimensions)
 	spriteDimensions = texture->getDimensions();
 }
 
+Entity::Entity(Texture* texture, Vec2 pos, Vec2 dimensions, Vec2 spritePos)
+	: texture(texture), pos(pos), dimensions(dimensions), spritePos(spritePos)
+{
+	spriteDimensions = dimensions;
+}
+
 Entity::Entity(Texture* texture, Vec2 pos, Vec2 dimensions, Vec2 spritePos, Vec2 spriteDimensions)
 	: texture(texture), pos(pos), dimensions(dimensions), spritePos(spritePos), spriteDimensions(spriteDimensions)
 {
@@ -46,3 +52,19 @@ Vec2 Entity::getDimensions()
 {
 	return dimensions;
 }
+
+
+
+bool Entity::mouseCollide(int mouseX, int mouseY)
+{
+	if (mouseX > pos.x &&
+		mouseX < (pos.x + dimensions.x) &&
+		mouseY > pos.y &&
+		mouseY < (pos.y + dimensions.y))
+	{
+		return true;
+	}
+	return false;
+
+
+} 

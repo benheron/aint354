@@ -3,7 +3,13 @@
 
 MapRoom::MapRoom()
 {
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 15; j++)
+		{
 
+		}
+	}
 }
 
 MapRoom::MapRoom(MapManager *mpmng, Vec2 pos, int e)

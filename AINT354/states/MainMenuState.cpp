@@ -9,10 +9,7 @@ MainMenuState::MainMenuState(StateManager* manager, Platform *platform)
 
 MainMenuState::~MainMenuState()
 {
-	delete buttonBgrRed;
-	delete buttonBgrGreen;
-	delete redPlay;
-	delete greenEdit;
+
 }
 
 bool MainMenuState::eventHandler()
@@ -26,7 +23,18 @@ bool MainMenuState::eventHandler()
 		{
 
 		case SDL_MOUSEMOTION:
-			
+			//hovering
+
+			for (int i = 0; i < mainMenuButtons.size(); i++)
+			{
+				if (mainMenuButtons[i]->mouseCollide(mouseX, mouseY))
+				{
+					mainMenuButtons[i]->setHover(true);
+				}
+				else {
+					mainMenuButtons[i]->setHover(false);
+				}
+			}
 			break;
 
 		case SDL_QUIT:
@@ -81,12 +89,10 @@ void MainMenuState::update(float dt)
 	{
 
 		stateManager->changeState(new GameState(stateManager, platform));
-	}
-
-	if (greenDown)
+	} else if  (greenDown)
 	{
 		//change to editor state
-		//stateManager->changeState(new EditorState(stateManager, platform));
+		stateManager->changeState(new EditorState(stateManager, platform));
 	}
 }
 
@@ -94,25 +100,32 @@ void MainMenuState::render()
 {
 	redPlay->render(platform->getRenderer());
 	greenEdit->render(platform->getRenderer());
+
+
+
+	//playTexture->pushToScreen(platform->getRenderer(), Vec2(20, 20), 20);
 }
 
 void MainMenuState::load()
 {
-
-	buttonBgrRed  = new Texture(platform->getRenderer(), 255, 0, 0);
-
-	buttonBgrGreen = new Texture(platform->getRenderer(), 0, 255, 0);
-
+	playTexture = new Texture("res/img/buttons/playBtn.png", platform->getRenderer());
+	editorTexture = new Texture("res/img/buttons/editorBtn.png", platform->getRenderer());
 
 	//background
-	redPlay = new Button(buttonBgrRed, Vec2(60, 40), Vec2(250, 115));
+	redPlay = new Button(playTexture, Vec2(60, 40), Vec2(250, 115), Vec2(0,0));
 
-	greenEdit = new Button(buttonBgrGreen, Vec2(60, 260), Vec2(250, 115));
+	greenEdit = new Button(editorTexture, Vec2(60, 260), Vec2(250, 115), Vec2(0, 0));
 
+
+	mainMenuButtons.push_back(redPlay);
+	mainMenuButtons.push_back(greenEdit);
 	//buttons
 }
 
 void MainMenuState::unload()
 {
-	
+	delete playTexture;
+	delete editorTexture;
+	delete redPlay;
+	delete greenEdit;
 }

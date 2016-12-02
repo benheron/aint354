@@ -14,7 +14,7 @@ public:
 	MiniMap(SDL_Renderer* renderer);
 	~MiniMap();
 
-	void buildMiniMap(RandMap *mapFloor);
+	void buildMiniMap(RandMap *mapFloor, Vec2 pos);
 
 	/**
 	@brief Update the Map.
@@ -27,6 +27,11 @@ public:
 	@param renderer A pointer to the renderer.
 	*/
 	void render(SDL_Renderer* renderer);
+
+
+	bool mouseCollide(int mouseX, int mouseY);
+
+
 
 protected:
 	std::vector<std::vector<int>> map;
@@ -44,4 +49,7 @@ protected:
 	Vec2 curRoomPos;
 
 	RandMap *mf;
+
+	Vec2 pos;
+	Vec2 dimensions;
 };

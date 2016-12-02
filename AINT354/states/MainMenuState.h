@@ -58,14 +58,14 @@ protected:
 	*/
 	virtual void unload();
 
-
-	Texture *buttonBgrRed;
-	Texture *buttonBgrGreen;
-
 	Button *redPlay;
 	Button *greenEdit;
 
+	Texture *playTexture;
+	Texture *editorTexture;
 
 	bool redDown = false;
 	bool greenDown = false;
+
+	std::vector<Button*> mainMenuButtons;
 };

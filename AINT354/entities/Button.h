@@ -11,25 +11,36 @@ public:
 	virtual ~Button();
 
 	/**
-	@brief Create the Entity using the size of the Texture as the size of the Entity.
+	@brief Create the Button using the size of the Texture as the size of the Entity.
 	@param texture A pointer to the Texture.
-	@param pos The position of the Entity.
+	@param pos The position of the Button.
 	*/
-	Button(Texture* texture, Vec2 pos, std::string text);
+	Button(Texture* texture, Vec2 pos);
 
 	/**
 	@brief Create the Entity.
 	@param texture A pointer to the Texture.
-	@param pos The position of the Entity.
-	@param dimensions The dimensions of the Entity.
+	@param pos The position of the Button.
+	@param dimensions The dimensions of the Button.
 	*/
 	Button(Texture* texture, Vec2 pos, Vec2 dimensions);
 
+
+
 	/**
-	@brief Create the Entity with a sprite from a spritesheet.
+	@brief Create the Button with a sprite from a spritesheet.
 	@param texture A pointer to the Texture.
 	@param pos The position of the Entity.
-	@param dimensions The dimensions of the Entity.
+	@param dimensions The dimensions of the Button.
+	@param spritePos The position of the sprite in the spritesheet.
+	*/
+	Button(Texture* texture, Vec2 pos, Vec2 dimensions, Vec2 spritePos);
+
+	/**
+	@brief Create the Button with a sprite from a spritesheet.
+	@param texture A pointer to the Texture.
+	@param pos The position of the Button.
+	@param dimensions The dimensions of the Button.
 	@param spritePos The position of the sprite in the spritesheet.
 	@param spriteDimensions The dimensions of the sprite in the spritesheet.
 	*/
@@ -51,7 +62,19 @@ public:
 	*/
 	virtual void render(SDL_Renderer* renderer);
 
-	bool mouseCollide(int mouseX, int mouseY);
+	//bool mouseCollide(int mouseX, int mouseY);
+
+
+	/**
+	@brief Get the hover value
+	*/
+	bool isHover();
+
+	/**
+	@brief Sets the hover value
+	@param h The hover value to set to
+	*/
+	void setHover(bool h);
 
 protected:
 	void buildButton();
@@ -59,6 +82,8 @@ protected:
 	Texture *buttonBgr;
 
 	TTF_Font *font = NULL;
+
+	bool hover = false;
 
 
 };
