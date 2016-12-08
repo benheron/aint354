@@ -39,6 +39,8 @@ public:
 	*/
 	void render(SDL_Renderer* renderer);
 
+	bool haveBlankID();
+
 private:
 	///Reference to tile type.
 	TileType* tileType;

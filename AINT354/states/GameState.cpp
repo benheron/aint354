@@ -31,6 +31,10 @@ bool GameState::eventHandler()
 				Utility::log(Utility::I, "Clicking");
 				Vec2 a = randFloor->getCurMap()->getPos();
 				Utility::log(Utility::I, "Room X: " + Utility::intToString(a.x) + ", Room Y : " + Utility::intToString(a.y));
+				if (currentMap->checkCollide(player))
+				{
+
+				}
 			}
 			break;
 		case SDL_KEYDOWN:
@@ -101,33 +105,104 @@ void GameState::update(float dt)
 
 	if (kLeft)
 	{
-		movement.x = -1;
+		//if (!currentMap->checkCollide(player))
+		{
+			movement.x = -1;
+		}
 	}
 	if (kRight)
 	{
-		movement.x = 1;
+	//	if (!currentMap->checkCollide(player))
+		{
+			movement.x = 1;
+		}
 	}
+
 	if (kUp)
 	{
-		movement.y = -1;
+		//	if (!currentMap->checkCollide(player))
+		{
+			movement.y = -1;
+		}
 	}
 
 	if (kDown)
 	{
-		movement.y = 1;
+		//if (!currentMap->checkCollide(player))
+		{
+			movement.y = 1;
+		}
+	}
+
+	//get normal of mom
+	Vec2 normCurPos = movement.normalize();
+	int speed = 7*60 *dt;
+
+	Vec2 dir = normCurPos * speed;
+	curPos.x += dir.x;
+
+	//curPos += normCurPos * speed;
+
+	Vec2 diff = normCurPos * speed;
+
+	
+
+
+	player->setPosition(curPos);
+
+	if (currentMap->checkCollide(player))
+	{
+		Vec2 x = curPos;
+
+		curPos -= diff;
+
+		x.x = curPos.x;
+		player->setPosition(x);
+
+
+
 	}
 
 
-	Vec2 normCurPos = movement.normalize();
-	int speed = 10;
-	curPos += normCurPos * speed * dt * 60;
+
+
+	curPos.y += dir.y;
+
+	player->setPosition(curPos);
+
+
+	if (currentMap->checkCollide(player))
+	{
+		Vec2 y = curPos;
+
+		curPos -= diff;
+		y.y = curPos.y;
+
+		player->setPosition(y);
+
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	//Utility::log(Utility::I, Utility::floatToString(speed * dt * 60));
 	//Utility::log(Utility::I, "X: " + Utility::floatToString(normCurPos.x) + " Y: " + Utility::floatToString(normCurPos.y));
 	//Utility::log(Utility::I, "X: " + Utility::floatToString(curPos.x) + " Y: " + Utility::floatToString(curPos.y));
 
-	player->setPosition(curPos);
-	
+
+
 
 
 	Vec2 cm = randFloor->getCurRoomPos();
@@ -137,25 +212,31 @@ void GameState::update(float dt)
 	{
 		randFloor->setCurRoomPos(Vec2((cm.x - 1), cm.y));
 		player->setPosition(Vec2(624.0f, cp.y));
+		currentMap = randFloor->getCurMap();
 	}
 
 	if (curPos.x > 640)
 	{
 		randFloor->setCurRoomPos(Vec2((cm.x + 1), cm.y));
 		player->setPosition(Vec2(0.0f, cp.y));
+		currentMap = randFloor->getCurMap();
 	}
 
 	if (curPos.y < 0) 
 	{
 		randFloor->setCurRoomPos(Vec2(cm.x, (cm.y-1)));
 		player->setPosition(Vec2(cp.x, 464.0f));
+		currentMap = randFloor->getCurMap();
 	}
 
 	if (curPos.y > 480)
 	{
 		randFloor->setCurRoomPos(Vec2(cm.x, (cm.y + 1)));
 		player->setPosition(Vec2(cp.x, 0.0f));
+		currentMap = randFloor->getCurMap();
 	}
+
+//	if (player->)
 }
 
 void GameState::render()
@@ -200,8 +281,10 @@ void GameState::load()
 	////currentMap->loadPlayer(playerType);
 
 
-	player = new Character(playerType->getTexture(), Vec2(25, 25), playerType);
+	player = new Character(playerType->getTexture(), Vec2(50, 50), playerType);
 
+	
+	Utility::log(Utility::I, Utility::floatToString((player->getDimensions()).x));
 
 
 
@@ -213,7 +296,7 @@ void GameState::load()
 
 	
 
-	mm = new MiniMap(platform->getRenderer());
+	mm = new MiniMap(platform->getRenderer(), 0);
 	mm->buildMiniMap(randFloor, Vec2(700, 50));
 
 	

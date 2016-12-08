@@ -11,7 +11,7 @@
 class MiniMap
 {
 public:
-	MiniMap(SDL_Renderer* renderer);
+	MiniMap(SDL_Renderer* renderer, int m);
 	~MiniMap();
 
 	void buildMiniMap(RandMap *mapFloor, Vec2 pos);
@@ -32,11 +32,12 @@ public:
 	bool mouseCollide(int mouseX, int mouseY);
 
 
+	Vec2 changeRoom(int mouseX, int mouseY);
+
 
 protected:
-	std::vector<std::vector<int>> map;
 
-	std::vector<std::vector<MiniMapIcon*>> map2;
+	std::vector<std::vector<MiniMapIcon*>> map;
 
 
 	Texture *tmpTexture;
@@ -52,4 +53,6 @@ protected:
 
 	Vec2 pos;
 	Vec2 dimensions;
+
+	int mode;
 };

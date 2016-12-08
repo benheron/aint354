@@ -59,6 +59,8 @@ public:
 private:
 	///Reference to CharacterType
 	CharacterType *characterType;
+
+	Vec2 lastPos = Vec2(0);
 	
 
 };

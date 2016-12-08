@@ -1,5 +1,7 @@
 #include "MapRoom.h"
 #include "Tile.h"
+#include "../Utility.h"
+#include "../Collision.h"
 
 MapRoom::MapRoom()
 {
@@ -131,7 +133,15 @@ void MapRoom::createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureMana
 
 
 
+	for (int i = 0; i < roomCreatures.size(); i++)
+	{
+		int a = Utility::randomInt(50, 600);
+		int b = Utility::randomInt(50, 420);
 
+		roomCreatures[i]->setPosition(Vec2(a, b));
+
+		Utility::log(Utility::I, Utility::intToString(a) + ", " + Utility::intToString(b));
+	}
 
 
 
@@ -206,4 +216,72 @@ void MapRoom::setAccess(bool b)
 bool MapRoom::getAccess()
 {
 	return access;
+}
+
+void MapRoom::setExists(bool e)
+{
+	exists = e;
+}
+
+bool MapRoom::getExists()
+{
+	return exists;
+}
+
+
+
+Tile* MapRoom::getTile(Vec2 xy)
+{
+	return roomTiles["O"][xy.y][xy.x];
+}
+
+bool MapRoom::checkCollide(Entity *e)
+{
+	if (exists)
+	{
+		Vec2 localPos = e->getPosition();
+		Vec2 localDimen = e->getDimensions();
+
+		int mx = floor(localPos.x / 32);
+		int my = floor(localPos.y / 32);
+
+		//Utility::log(Utility::I, "Player Tile position: X: " + Utility::intToString(mx) + " Y: " + Utility::intToString(my));
+
+
+
+		int c = 0;
+
+		for (int i = my - 1; i < my + 2; i++)
+		{
+			for (int j = mx - 1; j < mx + 2; j++)
+			{
+				c++;
+				if (!(j < 0 || j > 19 ||
+					i < 0 || i > 14))
+				{
+					if (!roomTiles["O"][i][j]->haveBlankID())
+					{
+						Vec2 tmp = roomTiles["O"][i][j]->getPosition();
+						Vec2 tmp2 = roomTiles["O"][i][j]->getDimensions();
+						/*
+
+						Utility::log(Utility::I, "Player X: " + Utility::floatToString(localPos.x) + ", Player Y: " + Utility::floatToString(localPos.y));
+						Utility::log(Utility::I, "Player Width " + Utility::floatToString(localDimen.x) + ", Player Height: " + Utility::floatToString(localDimen.y));
+						Utility::log(Utility::I, "Tile X: " + Utility::floatToString(tmp.x) + ", Tile Y: " + Utility::floatToString(tmp.y));
+						Utility::log(Utility::I, "Tile Width " + Utility::floatToString(tmp2.x) + ", Tile Height: " + Utility::floatToString(tmp2.y));*/
+
+
+						if (Collision::boxBoxCollision(localPos, localDimen, roomTiles["O"][i][j]->getPosition(), roomTiles["O"][i][j]->getDimensions()))
+						{
+							return true;
+						}
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+	return false;
+
 }

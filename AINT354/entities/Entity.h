@@ -92,6 +92,9 @@ public:
 
 	bool mouseCollide(int mouseX, int mouseY);
 
+
+	Vec2 getLastPos();
+
 protected:
 	///The XY position of the Entity.
 	Vec2 pos;
@@ -117,8 +120,8 @@ protected:
 	Vec2 velocity = Vec2(0,0);
 
 
-
-
+	///The last position of the Entity
+	Vec2 lastPos = Vec2(0);
 	
 
 };

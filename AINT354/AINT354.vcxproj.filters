@@ -159,6 +159,9 @@
     <ClCompile Include="levelManagement\MiniMapIcon.cpp">
       <Filter>Source Files\Level management</Filter>
     </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="states\GameState.h">
@@ -277,6 +280,9 @@
     </ClInclude>
     <ClInclude Include="levelManagement\MiniMapIcon.h">
       <Filter>Header Files\Level management</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

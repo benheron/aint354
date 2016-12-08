@@ -81,6 +81,10 @@ private:
 	///A 2D vector storing the spawn point of the player
 	Vec2 spawnPoint;
 
+	//max width/height
+	int maxSize = 10;
+	int numRooms = 8;
+
 
 
 	void createFloor(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng);
@@ -96,5 +100,14 @@ private:
 
 	void createEmptyFloor();
 
+	void addRooms(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng);
 
+	bool addToSingleRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng, Vec2 thisRoomPos, int type);
+
+	int checkRoomConnections(Vec2 roomPos);
+
+	std::vector<Vec2> roomPositions;
+
+
+	std::vector<MapRoom*> currentRooms;
 };

@@ -1,5 +1,6 @@
 #include "MainMenuState.h"
 #include "../Utility.h"
+#include "../Collision.h"
 
 MainMenuState::MainMenuState(StateManager* manager, Platform *platform)
 	: State(manager, platform)
@@ -46,10 +47,9 @@ bool MainMenuState::eventHandler()
 			{
 			case SDL_BUTTON_LEFT:
 				Utility::log(Utility::I, Utility::intToString(mouseX));
-				if (redPlay->mouseCollide(mouseX, mouseY))
+				if (Collision::pointBoxCollision(Vec2(mouseX, mouseY), redPlay->getPosition(), redPlay->getDimensions()))
 				{
 					redDown = true;
-					
 				}
 
 				if (greenEdit->mouseCollide(mouseX, mouseY))
@@ -87,7 +87,6 @@ void MainMenuState::update(float dt)
 {
 	if (redDown)
 	{
-
 		stateManager->changeState(new GameState(stateManager, platform));
 	} else if  (greenDown)
 	{

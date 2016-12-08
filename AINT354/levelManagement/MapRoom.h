@@ -7,6 +7,9 @@
 #include <Vector>
 #include "MapManager.h"
 #include "RoomTemplate.h"
+#include <math.h>
+
+#include "../entities/Entity.h"
 
 /**
 @brief Contains the data for a single room on the map
@@ -38,22 +41,58 @@ public:
 	void render(SDL_Renderer* renderer);
 
 
+
+	/**
+	@brief
+	*/
 	void createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng, Vec2 pos);
 
+	/**
+	@brief
+	*/
 	void loadPlayer(CharacterType *pt);
 
-	Character *player;
+	/**
+	@brief
+	*/
+	bool checkCollide(Entity *e);
 
+	/**
+	@brief
+	*/
 	void setPos(Vec2 pos);
 
+	/**
+	@brief
+	*/
 	Vec2 getPos();
 
+	/**
+	@brief
+	*/
 	void setAccess(bool b);
 
+	/**
+	@brief
+	*/
 	bool getAccess();
 
+	/**
+	@brief
+	*/
+	Tile* getTile(Vec2 xy);
 
-	bool exists = false;
+	/**
+	@brief
+	*/
+	bool getExists();
+
+
+	/**
+	@brief
+	*/
+	void setExists(bool e);
+
 private:
 
 	///A vector to hold all of the layer IDs.
@@ -83,5 +122,7 @@ private:
 
 	bool access = false;
 
-	
+	Character *player;
+
+	bool exists = false;
 };

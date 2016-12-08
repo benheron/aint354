@@ -152,6 +152,7 @@
     <ClCompile Include="audio\Audio.cpp" />
     <ClCompile Include="audio\Music.cpp" />
     <ClCompile Include="audio\SFX.cpp" />
+    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="entities\Button.cpp" />
     <ClCompile Include="entities\creatures\Character.cpp" />
     <ClCompile Include="entities\creatures\CharacterManager.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="audio\Audio.h" />
     <ClInclude Include="audio\Music.h" />
     <ClInclude Include="audio\SFX.h" />
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="dependencies\SDL.h" />
     <ClInclude Include="dependencies\SDL_image.h" />
     <ClInclude Include="dependencies\SDL_mixer.h" />

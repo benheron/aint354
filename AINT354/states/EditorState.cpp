@@ -24,6 +24,10 @@ bool EditorState::eventHandler()
 
 		case SDL_MOUSEMOTION:
 			//while mouse is moving
+			if (mm->mouseCollide(mouseX, mouseY))
+			{
+				Utility::log(Utility::I, "Collided at: " + Utility::intToString(mouseX) + ", " + Utility::intToString(mouseY));
+			}
 			break;
 
 		case SDL_QUIT:
@@ -33,8 +37,21 @@ bool EditorState::eventHandler()
 		case SDL_MOUSEBUTTONDOWN:
 			switch (events.button.button)
 			{
-				//while mouse is down
+			//while mouse is down
 
+			//left click
+			case SDL_BUTTON_LEFT:
+				if (mm->mouseCollide(mouseX, mouseY))
+				{
+					Vec2 tmp = mm->changeRoom(mouseX, mouseY);
+					if (tmp.x != -1)
+					{
+						randFloor->setCurRoomPos(tmp);
+						currentMap = randFloor->getCurMap();
+					}
+				}
+			break;
+				
 
 			}
 			break;
@@ -71,6 +88,7 @@ void EditorState::render()
 {
 
 	mm->render(platform->getRenderer());
+	randFloor->getCurMap()->render(platform->getRenderer());
 	//room grid
 	for (int i = 0; i < 21; i ++)
 	{
@@ -121,13 +139,12 @@ void EditorState::load()
 	mapmng->loadMapData("res/txt/map7.txt", tmp, cmtmp);
 	mapmng->loadMapData("res/txt/map8.txt", tmp, cmtmp);
 
-	//randFloor = new RandMap(mapmng);
-
-
 
 	randFloor = new RandMap(mapmng, tmp, cmtmp);
 
-	mm = new MiniMap(platform->getRenderer());
+	currentMap = randFloor->getCurMap();
+
+	mm = new MiniMap(platform->getRenderer(), 1);
 	mm->buildMiniMap(randFloor, Vec2(700, 50));
 	
 }

@@ -35,6 +35,7 @@ void Entity::render(SDL_Renderer* renderer)
 
 void Entity::setPosition(Vec2 pos)
 {
+	lastPos = pos;
 	this->pos = pos;
 }
 
@@ -68,3 +69,9 @@ bool Entity::mouseCollide(int mouseX, int mouseY)
 
 
 } 
+
+
+Vec2 Entity::getLastPos()
+{
+	return lastPos;
+}
