@@ -83,7 +83,7 @@ private:
 
 	//max width/height
 	int maxSize = 10;
-	int numRooms = 8;
+	int numRooms = 40;
 
 
 
@@ -100,7 +100,7 @@ private:
 
 	void createEmptyFloor();
 
-	void addRooms(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng);
+	void addRooms(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng, int type);
 
 	bool addToSingleRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng, Vec2 thisRoomPos, int type);
 

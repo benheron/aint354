@@ -93,6 +93,9 @@ public:
 	*/
 	void setExists(bool e);
 
+
+	void changeTileType(Vec2 tilePos, std::string tileID, TileTypeManager *ttmng);
+
 private:
 
 	///A vector to hold all of the layer IDs.

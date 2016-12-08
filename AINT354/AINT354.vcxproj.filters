@@ -52,9 +52,6 @@
     <Filter Include="Source Files\Entities\particle">
       <UniqueIdentifier>{ec8e8c1d-f8fb-45ee-870b-a126d757722c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\ScreenElements">
-      <UniqueIdentifier>{6a8c5529-e49c-45e4-9ebe-c1f3f56e22d2}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -268,9 +265,6 @@
     </ClInclude>
     <ClInclude Include="states\MainMenuState.h">
       <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="screenElements\ScreenElement.h">
-      <Filter>Header Files\ScreenElements</Filter>
     </ClInclude>
     <ClInclude Include="entities\Button.h">
       <Filter>Header Files\Entities</Filter>

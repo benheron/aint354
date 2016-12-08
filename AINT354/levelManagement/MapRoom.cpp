@@ -285,3 +285,9 @@ bool MapRoom::checkCollide(Entity *e)
 	return false;
 
 }
+
+
+void changeTileType(Vec2 tilePos, std::string tileID, TileTypeManager *ttmng)
+{
+
+}

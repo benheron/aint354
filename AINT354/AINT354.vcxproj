@@ -217,7 +217,6 @@
     <ClInclude Include="levelManagement\TileType.h" />
     <ClInclude Include="levelManagement\TileTypeManager.h" />
     <ClInclude Include="Platform.h" />
-    <ClInclude Include="screenElements\ScreenElement.h" />
     <ClInclude Include="states\EditorState.h" />
     <ClInclude Include="states\GameState.h" />
     <ClInclude Include="states\MainMenuState.h" />

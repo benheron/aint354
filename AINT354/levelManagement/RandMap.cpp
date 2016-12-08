@@ -19,7 +19,7 @@ RandMap::RandMap(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmn
 	int a = Utility::randomInt(1, 9);
 	int b = Utility::randomInt(1, 9);
 	
-	curRoomPos = Vec2(a, b);
+	curRoomPos = Vec2(maxSize/2, maxSize / 2);
 	createFloor(mpmng, ttmng, cmng);
 }
 
@@ -96,11 +96,24 @@ void RandMap::createFloor(MapManager *mpmng, TileTypeManager *ttmng, CreatureMan
 	firstRoom->setAccess(true);
 
 	currentRooms.push_back(firstRoom);
+
+	//get number of rooms that are allowed to be next to more than one when built
+	int newR = numRooms - std::abs((numRooms - 1) / 50);
+	int c = 0;
 	
 	for (int i = 0; i < numRooms-1; i++)
 	{
-		addRooms(mpmng, ttmng, cmng);
+		if (c < newR)
+		{
+			addRooms(mpmng, ttmng, cmng, 1);
+		}
+		else {
+			addRooms(mpmng, ttmng, cmng, 0);
+		}
+		c++;
 	}
+
+	int d = c;
 
 	//find furthest room from origin
 
@@ -129,11 +142,12 @@ void RandMap::createFloor(MapManager *mpmng, TileTypeManager *ttmng, CreatureMan
 	//create special rooms
 
 	//create end room
+/*
 	bool addedEndRoom = false;
 	while (!addedEndRoom)
 	{
 		addedEndRoom = addToSingleRoom(mpmng, ttmng, cmng, largest, 1);
-	}
+	}*/
 
 }
 
@@ -158,7 +172,7 @@ void RandMap::createEmptyFloor()
 }
 
 
-void RandMap::addRooms(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng)
+void RandMap::addRooms(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng, int type)
 {
 	bool addedRoom = false;
 	while (!addedRoom)
@@ -174,7 +188,7 @@ void RandMap::addRooms(MapManager *mpmng, TileTypeManager *ttmng, CreatureManage
 		//vector to hold the position of the room to add another room to
 		Vec2 roomToAddTo = currentRooms[rand]->getPos();
 
-		addedRoom = addToSingleRoom(mpmng, ttmng, cmng, roomToAddTo, 0);
+		addedRoom = addToSingleRoom(mpmng, ttmng, cmng, roomToAddTo, type);
 
 		
 	}
@@ -221,8 +235,14 @@ bool RandMap::addToSingleRoom(MapManager *mpmng, TileTypeManager *ttmng, Creatur
 					if (roomConnections == 1)
 					{
 						nMap = thisFloor[roomToCheck.x][roomToCheck.y];
-						nMap->createRoom(mpmng, ttmng, cmng, Vec2(thisRoomPos.x, roomToCheck.y));
+						nMap->createRoom(mpmng, ttmng, cmng, Vec2(roomToCheck.x, roomToCheck.y));
 						nMap->setAccess(true);
+						currentRooms.push_back(nMap);
+						Vec2 rp = Vec2(roomToCheck.x, roomToCheck.y);
+						roomPositions.push_back(rp);
+					}
+					else {
+						return false;
 					}
 				}
 				return true;
@@ -257,8 +277,14 @@ bool RandMap::addToSingleRoom(MapManager *mpmng, TileTypeManager *ttmng, Creatur
 					if (roomConnections == 1)
 					{
 						nMap = thisFloor[roomToCheck.x][roomToCheck.y];
-						nMap->createRoom(mpmng, ttmng, cmng, Vec2(thisRoomPos.x, roomToCheck.y));
+						nMap->createRoom(mpmng, ttmng, cmng, Vec2(roomToCheck.x, roomToCheck.y));
 						nMap->setAccess(true);
+						currentRooms.push_back(nMap);
+						Vec2 rp = Vec2(roomToCheck.x, roomToCheck.y);
+						roomPositions.push_back(rp);
+					}
+					else {
+						return false;
 					}
 				}
 				return true;
@@ -292,8 +318,14 @@ bool RandMap::addToSingleRoom(MapManager *mpmng, TileTypeManager *ttmng, Creatur
 					if (roomConnections == 1)
 					{
 						nMap = thisFloor[roomToCheck.x][roomToCheck.y];
-						nMap->createRoom(mpmng, ttmng, cmng, Vec2(thisRoomPos.x, roomToCheck.y));
+						nMap->createRoom(mpmng, ttmng, cmng, Vec2(roomToCheck.x, roomToCheck.y));
 						nMap->setAccess(true);
+						currentRooms.push_back(nMap);
+						Vec2 rp = Vec2(roomToCheck.x, roomToCheck.y);
+						roomPositions.push_back(rp);
+					}
+					else {
+						return false;
 					}
 				}
 				
@@ -321,7 +353,7 @@ bool RandMap::addToSingleRoom(MapManager *mpmng, TileTypeManager *ttmng, Creatur
 					Vec2 rp = Vec2(thisRoomPos.x - 1, thisRoomPos.y);
 					roomPositions.push_back(rp);
 
-					return true;
+					
 				}
 				else if (type == 1)
 				{
@@ -332,11 +364,17 @@ bool RandMap::addToSingleRoom(MapManager *mpmng, TileTypeManager *ttmng, Creatur
 					if (roomConnections == 1)
 					{
 						nMap = thisFloor[roomToCheck.x][roomToCheck.y];
-						nMap->createRoom(mpmng, ttmng, cmng, Vec2(thisRoomPos.x, roomToCheck.y));
+						nMap->createRoom(mpmng, ttmng, cmng, Vec2(roomToCheck.x, roomToCheck.y));
 						nMap->setAccess(true);
+						currentRooms.push_back(nMap);
+						Vec2 rp = Vec2(roomToCheck.x, roomToCheck.y);
+						roomPositions.push_back(rp);
+					}
+					else {
+						return false;
 					}
 				}
-				
+				return true;
 			}
 		}
 		break;
