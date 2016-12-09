@@ -78,6 +78,11 @@ protected:
 	MiniMap* mm;
 
 
+	TileTypeManager *ttmng;
+	CreatureManager *cmng;
+	MapManager *mmng;
+
+
 
 
 

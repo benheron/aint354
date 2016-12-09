@@ -31,7 +31,7 @@ MapRoom::~MapRoom()
 	
 }
 
-void MapRoom::createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng, Vec2 pos)
+void MapRoom::createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng, Vec2 pos, int type)
 {
 	//generate new room from the template data
 	//this allows the same room to be used but hold different data incase some is changed mid-gameplay
@@ -132,7 +132,7 @@ void MapRoom::createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureMana
 	}
 
 
-
+	//randomise creature placements
 	for (int i = 0; i < roomCreatures.size(); i++)
 	{
 		int a = Utility::randomInt(50, 600);
@@ -143,12 +143,10 @@ void MapRoom::createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureMana
 		Utility::log(Utility::I, Utility::intToString(a) + ", " + Utility::intToString(b));
 	}
 
-
-
-
-
-
-
+	if (type == 1)
+	{
+		changeTileType("O", Vec2(13, 1), "S0", ttmng);
+	}
 }
 
 void MapRoom::update(float dt)
@@ -235,7 +233,7 @@ Tile* MapRoom::getTile(Vec2 xy)
 	return roomTiles["O"][xy.y][xy.x];
 }
 
-bool MapRoom::checkCollide(Entity *e)
+int MapRoom::checkCollide(Entity *e)
 {
 	if (exists)
 	{
@@ -273,7 +271,13 @@ bool MapRoom::checkCollide(Entity *e)
 
 						if (Collision::boxBoxCollision(localPos, localDimen, roomTiles["O"][i][j]->getPosition(), roomTiles["O"][i][j]->getDimensions()))
 						{
-							return true;
+							if (roomTiles["O"][i][j]->getTileTypeID() == "S0")
+							{
+								return 2;
+							}
+							else {
+								return 1;
+							}
 						}
 					}
 				}
@@ -282,12 +286,12 @@ bool MapRoom::checkCollide(Entity *e)
 
 		return false;
 	}
-	return false;
+	return 0;
 
 }
 
 
-void changeTileType(Vec2 tilePos, std::string tileID, TileTypeManager *ttmng)
+void MapRoom::changeTileType(std::string layer, Vec2 tilePos, std::string tileID, TileTypeManager *ttmng)
 {
-
+	roomTiles[layer][tilePos.y][tilePos.x]->setTileType(tileID, ttmng);
 }

@@ -26,6 +26,7 @@ void Tile::render(SDL_Renderer *renderer)
 bool Tile::haveBlankID()
 {
 
+/*
 	if (tileType->getID() == "XX")
 	{
 	//	Utility::log(Utility::I, "X: " + Utility::floatToString(pos.x) +  " Y: " + Utility::floatToString(pos.x) + " ID is blank");
@@ -34,8 +35,18 @@ bool Tile::haveBlankID()
 	else {
 	//	Utility::log(Utility::I, "X: " + Utility::floatToString(pos.x) + " Y: " + Utility::floatToString(pos.x) + " ID is not blank. TileID: " + tileType->getID());
 		return false;
-	}
+	}*/
 
 
-//	return (tileType->getID() == "XX") ? true : false;
+	return (tileType->getID() == "XX") ? true : false;
+}
+
+void Tile::setTileType(std::string ID, TileTypeManager *ttmng)
+{
+	tileType = ttmng->getTileType(ID);
+}
+
+std::string Tile::getTileTypeID()
+{
+	return tileType->getID();
 }

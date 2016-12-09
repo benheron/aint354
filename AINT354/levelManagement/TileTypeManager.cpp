@@ -64,6 +64,7 @@ void TileTypeManager::loadTileData(std::string filePath, SDL_Renderer* renderer)
 			file >> spriteIndex.x;
 			file >> spriteIndex.y;
 
+
 			//store the data
 			tileTypes[iD] = new TileType(spritesheets[spritesheetID], iD, collidable, 
 				destructible, spriteIndex, spriteDimensions[spritesheetID]);

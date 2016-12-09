@@ -67,23 +67,9 @@ public:
 	std::vector<std::vector<MapRoom*>> getMap();
 
 private:
-	///A vector to hold all of the layer IDs.
-	std::vector<std::string> layerIDs;
-	///A 3D vector that contains all of the tiles. [Layer ID][Y Index][X Index]
-	std::unordered_map<std::string, std::vector<std::vector<Tile*>>> randMapTiles;
-
-	//An unordered map that contains all of the creatures. [Layer ID][Y Index][X Index]
-	//std::unordered_map<std::string, Creature*> mapCreatures;
-
-	///A vector of all creatures
-	std::vector<Creature*> randMapCreatures;
-
-	///A 2D vector storing the spawn point of the player
-	Vec2 spawnPoint;
-
 	//max width/height
 	int maxSize = 10;
-	int numRooms = 40;
+	int numRooms = 5;
 
 
 

@@ -39,7 +39,16 @@ public:
 	*/
 	void render(SDL_Renderer* renderer);
 
+	/**
+	@brief checks if the TileID is blank
+	@return True if ID is XX, False if not
+	*/
 	bool haveBlankID();
+
+
+	void setTileType(std::string ID, TileTypeManager *ttmng);
+
+	std::string getTileTypeID();
 
 private:
 	///Reference to tile type.

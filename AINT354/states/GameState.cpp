@@ -96,7 +96,7 @@ void GameState::update(float dt)
 
 	mm->update(dt);
 
-
+	bool changeFloor = false;
 
 	//just some testing data for moving the player
 	Vec2 curPos = player->getPosition();
@@ -105,33 +105,21 @@ void GameState::update(float dt)
 
 	if (kLeft)
 	{
-		//if (!currentMap->checkCollide(player))
-		{
-			movement.x = -1;
-		}
+		movement.x = -1;
 	}
 	if (kRight)
 	{
-	//	if (!currentMap->checkCollide(player))
-		{
-			movement.x = 1;
-		}
+		movement.x = 1;
 	}
 
 	if (kUp)
 	{
-		//	if (!currentMap->checkCollide(player))
-		{
-			movement.y = -1;
-		}
+		movement.y = -1;
 	}
 
 	if (kDown)
 	{
-		//if (!currentMap->checkCollide(player))
-		{
-			movement.y = 1;
-		}
+		movement.y = 1;
 	}
 
 	//get normal of mom
@@ -139,6 +127,10 @@ void GameState::update(float dt)
 	int speed = 7*60 *dt;
 
 	Vec2 dir = normCurPos * speed;
+
+	Vec2 newCurPosX = curPos;
+	Vec2 newCurPosY = curPos;
+
 	curPos.x += dir.x;
 
 	//curPos += normCurPos * speed;
@@ -150,7 +142,7 @@ void GameState::update(float dt)
 
 	player->setPosition(curPos);
 
-	if (currentMap->checkCollide(player))
+	if (int cm = currentMap->checkCollide(player))
 	{
 		Vec2 x = curPos;
 
@@ -161,6 +153,13 @@ void GameState::update(float dt)
 
 
 
+		//update current position
+		curPos = x;
+
+		if (cm == 2)
+		{
+			changeFloor = true;
+		}
 	}
 
 
@@ -171,7 +170,7 @@ void GameState::update(float dt)
 	player->setPosition(curPos);
 
 
-	if (currentMap->checkCollide(player))
+	if (int cm = currentMap->checkCollide(player))
 	{
 		Vec2 y = curPos;
 
@@ -180,6 +179,13 @@ void GameState::update(float dt)
 
 		player->setPosition(y);
 
+		//update current position
+		curPos = y;
+
+		if (cm == 2)
+		{
+			changeFloor = true;
+		}
 
 	}
 
@@ -202,7 +208,30 @@ void GameState::update(float dt)
 	//Utility::log(Utility::I, "X: " + Utility::floatToString(curPos.x) + " Y: " + Utility::floatToString(curPos.y));
 
 
+	if (changeFloor)
+	{
+		RandMap *newFloor = new RandMap(mmng, ttmng, cmng);
+		RandMap *oldFloor;
 
+		oldFloor = randFloor;
+		randFloor = newFloor;
+
+		delete oldFloor;
+
+		player->setPosition(Vec2(320, 240));
+
+		MiniMap *newMiniMap = new MiniMap(platform->getRenderer(), 0);
+		newMiniMap->buildMiniMap(randFloor, Vec2(700, 50));
+
+		MiniMap *oldMiniMap = mm;
+		delete oldMiniMap;
+
+		mm = newMiniMap;
+
+		currentMap = randFloor->getCurMap();
+
+
+	}
 
 
 	Vec2 cm = randFloor->getCurRoomPos();
@@ -236,6 +265,9 @@ void GameState::update(float dt)
 		currentMap = randFloor->getCurMap();
 	}
 
+
+
+
 //	if (player->)
 }
 
@@ -254,29 +286,29 @@ void GameState::load()
 {
 	//TMP FOR TESTING
 	//manage tiles
-	TileTypeManager* tmp = new TileTypeManager("res/txt/tiles.txt", platform->getRenderer());
+	ttmng = new TileTypeManager("res/txt/tiles.txt", platform->getRenderer());
 	//Creature + character loading test
-	CreatureManager* cmtmp = new CreatureManager("res/txt/creatures.txt", "res/txt/characters.txt", platform->getRenderer());
+	cmng = new CreatureManager("res/txt/creatures.txt", "res/txt/characters.txt", platform->getRenderer());
 	//load map
-	MapManager *mapmng = new MapManager("res/txt/map1.txt", tmp, cmtmp);
-	mapmng->loadMapData("res/txt/map2.txt", tmp, cmtmp);
-	mapmng->loadMapData("res/txt/map3.txt", tmp, cmtmp);
-	mapmng->loadMapData("res/txt/map4.txt", tmp, cmtmp);
-	mapmng->loadMapData("res/txt/map5.txt", tmp, cmtmp);
-	mapmng->loadMapData("res/txt/map6.txt", tmp, cmtmp);
-	mapmng->loadMapData("res/txt/map7.txt", tmp, cmtmp);
-	mapmng->loadMapData("res/txt/map8.txt", tmp, cmtmp);
+	mmng = new MapManager("res/txt/map1.txt", ttmng, cmng);
+	mmng->loadMapData("res/txt/map2.txt", ttmng, cmng);
+	mmng->loadMapData("res/txt/map3.txt", ttmng, cmng);
+	mmng->loadMapData("res/txt/map4.txt", ttmng, cmng);
+	mmng->loadMapData("res/txt/map5.txt", ttmng, cmng);
+	mmng->loadMapData("res/txt/map6.txt", ttmng, cmng);
+	mmng->loadMapData("res/txt/map7.txt", ttmng, cmng);
+	mmng->loadMapData("res/txt/map8.txt", ttmng, cmng);
 
 
 
-	randFloor = new RandMap(mapmng, tmp, cmtmp);
+	randFloor = new RandMap(mmng, ttmng, cmng);
 	currentMap = randFloor->getCurMap();
 
 
 
 
 	//grab the player type
-	playerType = cmtmp->getCharacterType("P0");
+	playerType = cmng->getCharacterType("P0");
 	//shove the type into the map to create a new player
 	////currentMap->loadPlayer(playerType);
 

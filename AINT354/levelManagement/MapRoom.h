@@ -45,7 +45,7 @@ public:
 	/**
 	@brief
 	*/
-	void createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng, Vec2 pos);
+	void createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng, Vec2 pos, int type);
 
 	/**
 	@brief
@@ -55,7 +55,7 @@ public:
 	/**
 	@brief
 	*/
-	bool checkCollide(Entity *e);
+	int checkCollide(Entity *e);
 
 	/**
 	@brief
@@ -94,7 +94,8 @@ public:
 	void setExists(bool e);
 
 
-	void changeTileType(Vec2 tilePos, std::string tileID, TileTypeManager *ttmng);
+	void changeTileType(std::string layer, Vec2 tilePos, std::string tileID, TileTypeManager *ttmng);
+
 
 private:
 
