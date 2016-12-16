@@ -11,6 +11,13 @@
 class Tile : public Entity
 {
 public:
+
+	Tile(Vec2 pos, Vec2 dimensions, TileType *tileType);
+
+	Tile(Texture* texture, Vec2 pos, Vec2 dimensions, TileType *tileType);
+
+
+	
 	/**
 	@brief Constructs the Tile object.
 	@param texture A pointer to the Tile Texture.

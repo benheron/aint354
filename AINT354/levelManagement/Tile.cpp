@@ -1,6 +1,16 @@
 #include "Tile.h"
 #include "../Utility.h"
 
+Tile::Tile(Vec2 pos, Vec2 dimensions, TileType *tileType) : Entity(pos, dimensions), tileType(tileType)
+{
+
+}
+
+Tile::Tile(Texture* texture, Vec2 pos, Vec2 dimensions, TileType *tileType) : Entity(texture, pos, dimensions), tileType(tileType)
+{
+
+}
+
 Tile::Tile(Texture* texture, Vec2 pos, Vec2 dimensions, Vec2 spritePos, Vec2 spriteDimensions, TileType* tileType)
 	: Entity(texture, pos, dimensions, spritePos, spriteDimensions), tileType(tileType)
 {

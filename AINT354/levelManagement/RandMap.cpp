@@ -13,19 +13,28 @@ RandMap::RandMap(MapManager *mpmng)
 	//createFloor(mpmng);
 }
 
-RandMap::RandMap(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng)
+RandMap::RandMap(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng, int rooms)
 {
+	dimens = Vec2(32 * 20, 32 * 15);
+	pos = Vec2(0, 0);
 	
 	int a = Utility::randomInt(1, 9);
 	int b = Utility::randomInt(1, 9);
 	
 	curRoomPos = Vec2(maxSize/2, maxSize / 2);
-	createFloor(mpmng, ttmng, cmng);
+	createFloor(mpmng, ttmng, cmng, rooms);
 }
 
 
 RandMap::~RandMap()
 {
+	for (int i = 0; i < thisFloor.size(); i++)
+	{
+		for (int j = 0; j < thisFloor[i].size(); j++)
+		{
+			delete thisFloor[i][j];
+		}
+	}
 }
 
 void RandMap::update(float dt)
@@ -58,20 +67,10 @@ void RandMap::setCurRoomPos(Vec2 xy)
 
 }
 
-void RandMap::createFloor(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng)
+void RandMap::createFloor(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng, int rooms)
 {
 
-	int test[5][5] = {
-		{ 1,1,1,1,1 },
-		{ 1,0,0,1,1 },
-		{ 1,1,0,1,1 },
-		{ 1,1,1,0,0 },
-		{ 1,1,1,1,1 }
-	};
-
-	
-
-
+	numRooms = rooms;
 	std::vector<std::vector<int>> floorArray;
 
 	for (int i = 0; i < maxSize; i++)
@@ -91,11 +90,12 @@ void RandMap::createFloor(MapManager *mpmng, TileTypeManager *ttmng, CreatureMan
 	MapRoom *firstRoom = thisFloor[curRoomPos.x][curRoomPos.y];
 	firstRoom->createRoom(mpmng, ttmng, cmng, Vec2(curRoomPos.x, curRoomPos.y), 0);
 	firstRoom->setAccess(true);
+	roomPositions.push_back(curRoomPos);
 
 	currentRooms.push_back(firstRoom);
 
 	//get number of rooms that are allowed to be next to more than one when built
-	int newR = numRooms - std::abs((numRooms - 1) * 0.02);
+	int newR = numRooms - std::abs((numRooms - 1) * 0.05);
 	int c = 0;
 	
 	for (int i = 0; i < numRooms-1; i++)
@@ -107,6 +107,7 @@ void RandMap::createFloor(MapManager *mpmng, TileTypeManager *ttmng, CreatureMan
 		else {
 			addRooms(mpmng, ttmng, cmng, 0);
 		}
+		
 		c++;
 	}
 
@@ -168,25 +169,35 @@ void RandMap::createFloor(MapManager *mpmng, TileTypeManager *ttmng, CreatureMan
 		roomPositions[min] = tmp2;
 	}
 
-	int g = 0;
-
 
 	//create special rooms
 
 	//create end room
 
 	bool addedEndRoom = false;
+
+	int endRoomTries = 0;
+
 	while (!addedEndRoom)
 	{
-		for (int i = roomPositions.size()-1; i > -1; i--)
+		for (int i = roomPositions.size() - 1; i > -1; i--)
 		{
 			addedEndRoom = addToSingleRoom(mpmng, ttmng, cmng, roomPositions[i], 2);
+			endRoomTries++;
 			if (addedEndRoom)
 			{
 				break;
 			}
+
+			if (endRoomTries > 50000)
+			{
+				//throw error
+				break;
+			}
 		}
 	}
+	
+	
 
 
 
@@ -265,6 +276,7 @@ void RandMap::createEmptyFloor()
 void RandMap::addRooms(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng, int type)
 {
 	bool addedRoom = false;
+	int c = 0;
 	while (!addedRoom)
 	{
 		//find a random integer between 0 and the number of current rooms
@@ -278,9 +290,20 @@ void RandMap::addRooms(MapManager *mpmng, TileTypeManager *ttmng, CreatureManage
 		//vector to hold the position of the room to add another room to
 		Vec2 roomToAddTo = currentRooms[rand]->getPos();
 
-		addedRoom = addToSingleRoom(mpmng, ttmng, cmng, roomToAddTo, type);
-
+		//if failed 1000 times, forget rules and just add a room
+		if (c < 1000000)
+		{
+			addedRoom = addToSingleRoom(mpmng, ttmng, cmng, roomToAddTo, type);
+		}
+		else {
+			addedRoom = addToSingleRoom(mpmng, ttmng, cmng, roomToAddTo, 0);
+		}
 		
+		
+		
+
+
+		c++;
 	}
 }
 
@@ -539,4 +562,22 @@ int RandMap::checkRoomConnections(Vec2 roomPos)
 		}
 	}
 	return roomsConnected;
+}
+
+
+
+
+void RandMap::setPosition(Vec2 p)
+{
+	pos = p;
+}
+
+Vec2 RandMap::getPosition()
+{
+	return pos;
+}
+
+Vec2 RandMap::getDimensions()
+{
+	return dimens;
 }

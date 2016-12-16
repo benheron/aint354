@@ -2,7 +2,7 @@
 #include "Utility.h"
 
 
-//creates basi
+//creates basic texture
 Texture::Texture(SDL_Renderer* renderer, int r, int g, int b)
 {
 	//Creates the surface
@@ -94,6 +94,50 @@ Texture::Texture(std::string fileLocation, SDL_Renderer* renderer, bool magentaA
 	dimensions = Vec2(textureWidth, textureHeight);
 }
 
+Texture::Texture(SDL_Renderer *renderer, std::string text, TTF_Font *font, int r, int g, int b)
+{
+	SDL_Colour colour = { r, g, b };
+	//Render text surface
+	SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), colour);
+	
+	//Create texture from surface pixels
+	textureData = SDL_CreateTextureFromSurface(renderer, surface);
+		
+	//Get image dimensions
+	int textureWidth, textureHeight;
+	SDL_QueryTexture(textureData, NULL, NULL, &textureWidth, &textureHeight);
+	dimensions = Vec2(textureWidth, textureHeight);
+
+	/*mWidth = textSurface->w;
+	mHeight = textSurface->h;
+
+	SDL_QueryTexture(textureData, NULL, NULL, )*/
+}
+
+Texture::Texture(SDL_Renderer *renderer, std::string text, TTF_Font *font, SDL_Colour colour)
+{
+
+
+
+	//Render text surface
+	SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), colour);
+
+	//Create texture from surface pixels
+	textureData = SDL_CreateTextureFromSurface(renderer, surface);
+
+	//Get image dimensions
+	int textureWidth, textureHeight;
+	SDL_QueryTexture(textureData, NULL, NULL, &textureWidth, &textureHeight);
+	dimensions = Vec2(textureWidth, textureHeight);
+
+}
+
+
+
+
+
+
+
 Texture::~Texture()
 {
 	//deletes the texture from memory
@@ -174,6 +218,18 @@ void Texture::pushSpriteToScreen(SDL_Renderer* renderer, Vec2 pos, Vec2 scale, V
 
 	//Copy the texture to the renderer at the destination rectangle
 	SDL_RenderCopy(renderer, textureData, &srcRect, &destRect);
+
+}
+
+
+void Texture::renderText(SDL_Renderer* renderer, Vec2 pos, Vec2 scale) {
+	SDL_Rect destRect;
+	destRect.x = (int)pos.x;
+	destRect.y = (int)pos.y;
+	destRect.w = (int)scale.x;
+	destRect.h = (int)scale.y;
+
+	SDL_RenderCopy(renderer, textureData, NULL, &destRect);
 }
 
 void Texture::setColourTint(SDL_Colour colour)

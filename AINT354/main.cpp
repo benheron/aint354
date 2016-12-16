@@ -6,6 +6,7 @@
 
 #include "states/GameState.h"
 #include "states/MainMenuState.h"
+#include "states/LoadState.h"
 
 int main(int argc, char *argv[]);
 
@@ -35,7 +36,7 @@ int main(int argc, char *argv[])
 
 
 	//manager->addState(new GameState(manager, platform));
-	manager->addState(new MainMenuState(manager, platform));
+	manager->addState(new LoadState(manager, platform));
 
 	bool done = false;
 

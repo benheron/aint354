@@ -33,7 +33,7 @@ public:
 	@param ttmng The TileType Manager
 	@param cmng The Creature Manager
 	*/
-	RandMap(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng);
+	RandMap(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng, int rooms);
 
 	/**
 	@brief Map destructor.
@@ -55,8 +55,6 @@ public:
 
 	void loadPlayer(CharacterType *pt);
 
-	Character *player;
-
 	void setCurRoomPos(Vec2 xy);
 
 	MapRoom* getCurMap();
@@ -66,14 +64,21 @@ public:
 
 	std::vector<std::vector<MapRoom*>> getMap();
 
+
+	void setPosition(Vec2 p);
+
+	Vec2 getPosition();
+
+	Vec2 getDimensions();
+
 private:
 	//max width/height
 	int maxSize = 10;
-	int numRooms = 5;
+	int numRooms = 26;
 
+	
 
-
-	void createFloor(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng);
+	void createFloor(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng, int rooms);
 
 	std::vector<std::vector<MapRoom*>> thisFloor;
 
@@ -96,4 +101,14 @@ private:
 
 
 	std::vector<MapRoom*> currentRooms;
+
+
+	Vec2 pos;
+	Vec2 dimens;
+
+
+
+
+
+
 };

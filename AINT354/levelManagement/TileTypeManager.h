@@ -33,6 +33,20 @@ public:
 	*/
 	TileType* getTileType(std::string tileTypeID);
 
+
+	/**
+	@brief Gets all the tile types
+	@returns All the tile types pointers
+	*/
+	std::unordered_map<std::string, TileType*> getTileTypes();
+
+
+	/**
+	@brief Gets all the tile types
+	@returns All the tile types pointers in a vector
+	*/
+	std::unordered_map<std::string, std::vector<TileType*>> getTileTypesVector();
+
 private:
 	///The number of different spritesheets.
 	int numOfSpritesheets;
@@ -45,6 +59,8 @@ private:
 	///The dimensions of the sprites for each spritesheet.
 	std::unordered_map<std::string, Vec2> spriteDimensions;
 
+
+	std::unordered_map<std::string, std::vector<TileType*>> tileTypesVector;
 	/**
 	@brief Loads the tile data from the file.
 	@param filePath The file path of the tiles data.

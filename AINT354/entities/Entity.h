@@ -9,6 +9,8 @@
 class Entity
 {
 public:
+	Entity(Vec2 pos, Vec2 dimensions);
+
 	/**
 	@brief Create the Entity using the size of the Texture as the size of the Entity.
 	@param texture A pointer to the Texture.

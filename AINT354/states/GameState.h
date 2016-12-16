@@ -29,7 +29,7 @@ public:
 	@param [in,out] platform - Platform containing OS dependent data.
 	*/
 
-	GameState(StateManager* manager, Platform *platform);
+	GameState(StateManager* manager, Platform *platform, TileTypeManager *t, CreatureManager *c, MapManager *m, RandMap *map);
 	
 	virtual ~GameState();
 

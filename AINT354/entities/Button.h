@@ -76,6 +76,17 @@ public:
 	*/
 	void setHover(bool h);
 
+	/**
+	@brief Sets the selected value
+	@param s The selected value to set to
+	*/
+	void setSelected(bool s);
+
+	/**
+	@brief Gets the selected value
+	*/
+	bool getSelected();
+
 protected:
 	void buildButton();
 
@@ -85,5 +96,6 @@ protected:
 
 	bool hover = false;
 
+	bool selected = false;
 
 };

@@ -68,6 +68,9 @@ void TileTypeManager::loadTileData(std::string filePath, SDL_Renderer* renderer)
 			//store the data
 			tileTypes[iD] = new TileType(spritesheets[spritesheetID], iD, collidable, 
 				destructible, spriteIndex, spriteDimensions[spritesheetID]);
+
+			tileTypesVector[spritesheetID].push_back(new TileType(spritesheets[spritesheetID], iD, collidable,
+				destructible, spriteIndex, spriteDimensions[spritesheetID]));
 		}
 		//Close the file
 		file.close();
@@ -85,4 +88,12 @@ void TileTypeManager::loadTileData(std::string filePath, SDL_Renderer* renderer)
 TileType* TileTypeManager::getTileType(std::string tileTypeID)
 {
 	return tileTypes[tileTypeID];
+}
+
+std::unordered_map<std::string, TileType*> TileTypeManager::getTileTypes() {
+	return tileTypes;
+}
+
+std::unordered_map<std::string, std::vector<TileType*>> TileTypeManager::getTileTypesVector() {
+	return tileTypesVector;
 }

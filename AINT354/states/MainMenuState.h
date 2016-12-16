@@ -23,7 +23,7 @@ public:
 	@param [in,out] platform - Platform containing OS dependent data.
 	*/
 
-	MainMenuState(StateManager* manager, Platform *platform);
+	MainMenuState(StateManager* manager, Platform *platform, TileTypeManager *t, CreatureManager *c, MapManager *m);
 
 	virtual ~MainMenuState();
 
@@ -68,4 +68,8 @@ protected:
 	bool greenDown = false;
 
 	std::vector<Button*> mainMenuButtons;
+
+	TileTypeManager *ttmng;
+	CreatureManager *cmng;
+	MapManager *mmng;
 };

@@ -1,5 +1,11 @@
 #include "Entity.h"
 
+
+Entity::Entity(Vec2 pos, Vec2 dimensions) :pos(pos), dimensions(dimensions)
+{
+
+}
+
 Entity::Entity(Texture* texture, Vec2 pos) 
 	: texture(texture), pos(pos), spritePos(Vec2())
 {
@@ -30,7 +36,7 @@ Entity::~Entity()
 
 void Entity::render(SDL_Renderer* renderer)
 {
-	texture->pushSpriteToScreen(renderer, pos, dimensions, spritePos, spriteDimensions);
+	//texture->pushSpriteToScreen(renderer, pos, dimensions, spritePos, spriteDimensions);
 }
 
 void Entity::setPosition(Vec2 pos)

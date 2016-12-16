@@ -38,6 +38,13 @@ void Button::render(SDL_Renderer *renderer)
 	if (hover) {
 		texture->pushSpriteToScreen(renderer, pos, Vec2(spritePos.x, spriteDimensions.y), spriteDimensions);
 	}
+	else if  (selected) {
+		/************************************************************************/
+		/*         Need to change for all buttons                               */
+		/************************************************************************/
+		
+		texture->pushSpriteToScreen(renderer, pos, Vec2(spritePos.x, spriteDimensions.y), spriteDimensions);
+	}
 	else {
 		texture->pushSpriteToScreen(renderer, pos, spritePos, spriteDimensions);
 	}
@@ -53,4 +60,14 @@ bool Button::isHover()
 void Button::setHover(bool h)
 {
 	hover = h;
+}
+
+void Button::setSelected(bool s)
+{
+	selected = s;
+}
+
+bool Button::getSelected()
+{
+	return selected;
 }

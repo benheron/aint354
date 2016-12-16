@@ -1,10 +1,14 @@
 #include "GameState.h"
 #include "../Utility.h"
 
-GameState::GameState(StateManager* manager, Platform *platform)
+GameState::GameState(StateManager* manager, Platform *platform, TileTypeManager *t, CreatureManager *c, MapManager *m, RandMap *map)
 	: State(manager, platform)
 {
 	stateName = "GameState";
+	ttmng = t;
+	cmng = c;
+	mmng = m;
+	randFloor = map;
 }
 
 GameState::~GameState()
@@ -210,7 +214,7 @@ void GameState::update(float dt)
 
 	if (changeFloor)
 	{
-		RandMap *newFloor = new RandMap(mmng, ttmng, cmng);
+		RandMap *newFloor = new RandMap(mmng, ttmng, cmng, 22);
 		RandMap *oldFloor;
 
 		oldFloor = randFloor;
@@ -284,24 +288,8 @@ void GameState::render()
 
 void GameState::load()
 {
-	//TMP FOR TESTING
-	//manage tiles
-	ttmng = new TileTypeManager("res/txt/tiles.txt", platform->getRenderer());
-	//Creature + character loading test
-	cmng = new CreatureManager("res/txt/creatures.txt", "res/txt/characters.txt", platform->getRenderer());
-	//load map
-	mmng = new MapManager("res/txt/map1.txt", ttmng, cmng);
-	mmng->loadMapData("res/txt/map2.txt", ttmng, cmng);
-	mmng->loadMapData("res/txt/map3.txt", ttmng, cmng);
-	mmng->loadMapData("res/txt/map4.txt", ttmng, cmng);
-	mmng->loadMapData("res/txt/map5.txt", ttmng, cmng);
-	mmng->loadMapData("res/txt/map6.txt", ttmng, cmng);
-	mmng->loadMapData("res/txt/map7.txt", ttmng, cmng);
-	mmng->loadMapData("res/txt/map8.txt", ttmng, cmng);
 
-
-
-	randFloor = new RandMap(mmng, ttmng, cmng);
+	
 	currentMap = randFloor->getCurMap();
 
 
@@ -313,7 +301,7 @@ void GameState::load()
 	////currentMap->loadPlayer(playerType);
 
 
-	player = new Character(playerType->getTexture(), Vec2(50, 50), playerType);
+	player = new Character(playerType->getTexture(), Vec2(320, 240), playerType);
 
 	
 	Utility::log(Utility::I, Utility::floatToString((player->getDimensions()).x));

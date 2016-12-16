@@ -28,7 +28,39 @@ MapRoom::MapRoom(MapManager *mpmng, Vec2 pos, int e)
 
 MapRoom::~MapRoom()
 {
-	
+
+	for (int i = 0; i < layerIDs.size(); i++)
+	{
+		//Store the ID of the layer
+		std::string layerID = layerIDs[i];
+
+
+		int ySize = roomTiles["B"].size();
+
+
+
+		for (int y = 0; y < ySize; y++)
+		{
+			int xSize = roomTiles["B"][0].size();
+
+			if (layerID == "O" || layerID == "B")
+			{
+
+				for (int x = 0; x < xSize; x++)
+				{
+					delete  roomTiles[layerID][y][x];
+				}
+			}
+		}
+	}
+
+	for (int j = 0; j < roomCreatures.size(); j++)
+	{
+		delete roomCreatures[j];
+	}
+
+
+
 }
 
 void MapRoom::createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng, Vec2 pos, int type)
@@ -97,8 +129,13 @@ void MapRoom::createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureMana
 					Texture* tileTexture = tileType->getTexture();
 
 					//Store tile
-					roomTiles[layerID][y].push_back(
+					/*roomTiles[layerID][y].push_back(
 						new Tile(tileTexture, Vec2((x * 32), (y *32)), Vec2(32, 32), spritePos, spriteDimensions, tileType)
+					);*/
+
+
+					roomTiles[layerID][y].push_back(
+						new Tile(Vec2((x * 32), (y * 32)), Vec2(32, 32), tileType)
 					);
 
 				}
@@ -140,7 +177,7 @@ void MapRoom::createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureMana
 
 		roomCreatures[i]->setPosition(Vec2(a, b));
 
-		Utility::log(Utility::I, Utility::intToString(a) + ", " + Utility::intToString(b));
+		//Utility::log(Utility::I, Utility::intToString(a) + ", " + Utility::intToString(b));
 	}
 
 	if (type == 1)

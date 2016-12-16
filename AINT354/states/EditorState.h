@@ -12,8 +12,11 @@
 #include "../levelManagement/TileTypeManager.h"
 #include "../levelManagement/MapManager.h"
 #include "../levelManagement/Map.h"
+#include "../levelManagement/TileSelection.h"
 
-#
+#include "../entities/Button.h"
+#include "../UI/Slider.h"
+
 
 /**
 @class EditorState
@@ -30,7 +33,7 @@ public:
 	@param [in,out] platform - Platform containing OS dependent data.
 	*/
 
-	EditorState(StateManager* manager, Platform *platform);
+	EditorState(StateManager* manager, Platform *platform, TileTypeManager *t, CreatureManager *c, MapManager *m);
 
 	virtual ~EditorState();
 
@@ -65,11 +68,63 @@ protected:
 	*/
 	virtual void unload();
 
+	/**
+	@brief Creates new map and destroys the old one
+	*/
+	void createNewMap();
+
+	/**
+	@brief Imports the level data from a file
+	*/
+	void importLevelData();
+
+	/**
+	@brief Exports the level data to a file
+	*/
+	void exportLevelData();
 
 	Texture *white;
 
 	RandMap *randFloor;
 	MapRoom *currentMap;
 	MiniMap* mm;
+
+	Texture *genTexture;
+	Button *genMapBtn;
+
+	Button *testMapBtn;
+
+	bool genBtnDwn = false;
+
+
+	TileTypeManager *ttmng;
+	CreatureManager *cmng;
+	MapManager *mmng;
+
+	Slider *numRoomsSlider;
+
+	bool mouseDownSlider = false;
+
+	TTF_Font *font = NULL;
+
+	Texture *numRoomsText;
+
+	TileSelection *tileSelection;
+
+	std::string tileTypeSelected;
+	
+
+	Button *bgLayerBtn;
+	Button *objLayerBtn;
+
+	
+	bool playMap = false;
+
+
+	Texture *layerText;
+	Texture *bgText;
+	Texture *objText;
+
+	std::string layerOn;
 
 };

@@ -2,6 +2,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <string>
 #include "Vec2.h"
 
@@ -42,6 +43,26 @@ public:
 	@param magentaAlpha If true any magenta pixels in the image will be converted to alpha.
 	*/
 	Texture(std::string fileLocation, SDL_Renderer* renderer, bool magentaAlpha);
+
+	/**
+	@brief Constructs the Texture using an RGB value. This will create a 1x1 rectangle of that colour that can be scaled.
+	@param renderer A pointer to the renderer.
+	@param text The text to write
+	@param font The font to use with the text
+	@param r The red value.
+	@param g The green value.
+	@param b The blue value.
+	*/
+	Texture(SDL_Renderer *renderer, std::string text, TTF_Font *font, int r, int g, int b);
+
+	/**
+	@brief Constructs the Texture using an RGB value. This will create a 1x1 rectangle of that colour that can be scaled.
+	@param renderer A pointer to the renderer.
+	@param text The text to write
+	@param font The font to use with the text
+	@param colour The colour value.
+	*/
+	Texture(SDL_Renderer *renderer, std::string text, TTF_Font *font, SDL_Colour colour);
 
 	/**
 	@brief Destructs Texture.
@@ -97,6 +118,9 @@ public:
 	@param spriteDimensions The dimensions of the sprite.
 	*/
 	void pushSpriteToScreen(SDL_Renderer* renderer, Vec2 pos, Vec2 scale, Vec2 spritePos, Vec2 spriteDimensions);
+
+
+	void renderText(SDL_Renderer* renderer, Vec2 pos, Vec2 scale);
 
 	/**
 	 @brief Applies a colour tint to the texture.

@@ -52,6 +52,12 @@
     <Filter Include="Source Files\Entities\particle">
       <UniqueIdentifier>{ec8e8c1d-f8fb-45ee-870b-a126d757722c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\UI">
+      <UniqueIdentifier>{bcecb6a2-6f46-4ab8-b582-a72d136fbecd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI">
+      <UniqueIdentifier>{864341b5-0b6f-46c5-a28f-bd9c852d2fa2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -158,6 +164,21 @@
     </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Slider.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\SliderSquare.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="levelManagement\TileSelection.cpp">
+      <Filter>Source Files\Level management</Filter>
+    </ClCompile>
+    <ClCompile Include="ScreenElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="states\LoadState.cpp">
+      <Filter>Source Files\States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -277,6 +298,21 @@
     </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Slider.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\SliderSquare.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="levelManagement\TileSelection.h">
+      <Filter>Header Files\Level management</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenElement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="states\LoadState.h">
+      <Filter>Header Files\States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
