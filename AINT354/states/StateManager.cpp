@@ -30,6 +30,17 @@ void StateManager::addState(State* state)
 	
 }
 
+void StateManager::addExistingState(State* state)
+{
+	states.push_back(state);
+	Utility::log(Utility::I, "StateManager: Switched to the " + state->getStateName());
+	state->setActive(true);
+	//state->startLoading();
+
+}
+
+
+
 void StateManager::prepareToChangeState()
 {
 	//Stop Music and Clear the timers
@@ -47,6 +58,15 @@ void StateManager::popLastState()
 	states.back()->startUnloading();
 	delete states.back();
 	states.pop_back();
+	states.back()->setActive(true);
+}
+
+
+void StateManager::popLastStateWithoutDelete()
+{
+	states.back()->startUnloading();
+	states.pop_back();
+	states.back()->setActive(true);
 }
 
 bool StateManager::eventHandler()
