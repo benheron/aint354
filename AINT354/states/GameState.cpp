@@ -1,7 +1,7 @@
 #include "GameState.h"
 #include "../Utility.h"
 
-GameState::GameState(StateManager* manager, Platform *platform, TileTypeManager *t, CreatureManager *c, MapManager *m, RandMap *map)
+GameState::GameState(StateManager* manager, Platform *platform, TileTypeManager *t, CreatureManager *c, MapManager *m, RandMap *map, int mode, PauseMenuState *p)
 	: State(manager, platform)
 {
 	stateName = "GameState";
@@ -9,6 +9,8 @@ GameState::GameState(StateManager* manager, Platform *platform, TileTypeManager 
 	cmng = c;
 	mmng = m;
 	randFloor = map;
+	this->mode = mode;
+	pms = p;
 }
 
 GameState::~GameState()
@@ -35,10 +37,7 @@ bool GameState::eventHandler()
 				Utility::log(Utility::I, "Clicking");
 				Vec2 a = randFloor->getCurMap()->getPos();
 				Utility::log(Utility::I, "Room X: " + Utility::intToString(a.x) + ", Room Y : " + Utility::intToString(a.y));
-				if (currentMap->checkCollide(player))
-				{
-
-				}
+				
 			}
 			break;
 		case SDL_KEYDOWN:
@@ -46,7 +45,18 @@ bool GameState::eventHandler()
 			{
 			case SDLK_ESCAPE:
 				//do same as quit
-				return true;
+				if (mode == 1)
+				{
+					stateManager->popLastState();
+					return false;
+				}
+				else {
+					stateManager->addState(pms);
+					
+					
+					esc = true;
+					return false;
+				}
 				break;
 			//temporary movement
 			case SDLK_UP:
@@ -96,10 +106,11 @@ bool GameState::eventHandler()
 
 void GameState::update(float dt)
 {
-	particles->update(dt);
+	//particles->update(dt);
 
 	mm->update(dt);
 
+	player->update(dt);
 	bool changeFloor = false;
 
 	//just some testing data for moving the player
@@ -214,25 +225,33 @@ void GameState::update(float dt)
 
 	if (changeFloor)
 	{
-		RandMap *newFloor = new RandMap(mmng, ttmng, cmng, 22);
-		RandMap *oldFloor;
+		if (mode == 0)
+		{
+			RandMap *newFloor = new RandMap(mmng, ttmng, cmng, 22);
+			RandMap *oldFloor;
 
-		oldFloor = randFloor;
-		randFloor = newFloor;
+			oldFloor = randFloor;
+			randFloor = newFloor;
 
-		delete oldFloor;
+			delete oldFloor;
 
-		player->setPosition(Vec2(320, 240));
+			player->setPosition(Vec2(320, 240));
 
-		MiniMap *newMiniMap = new MiniMap(platform->getRenderer(), 0);
-		newMiniMap->buildMiniMap(randFloor, Vec2(700, 50));
+			MiniMap *newMiniMap = new MiniMap(platform->getRenderer(), 0);
+			newMiniMap->buildMiniMap(randFloor, Vec2(700, 50));
 
-		MiniMap *oldMiniMap = mm;
-		delete oldMiniMap;
+			MiniMap *oldMiniMap = mm;
+			delete oldMiniMap;
 
-		mm = newMiniMap;
+			mm = newMiniMap;
 
-		currentMap = randFloor->getCurMap();
+			currentMap = randFloor->getCurMap();
+		}
+		else if (mode == 1)
+		{
+			stateManager->popLastState();
+			return;
+		}
 
 
 	}
@@ -241,28 +260,28 @@ void GameState::update(float dt)
 	Vec2 cm = randFloor->getCurRoomPos();
 	Vec2 cp = player->getPosition();
 
-	if (curPos.x < 0)
+	if (curPos.x < -8)
 	{
 		randFloor->setCurRoomPos(Vec2((cm.x - 1), cm.y));
 		player->setPosition(Vec2(624.0f, cp.y));
 		currentMap = randFloor->getCurMap();
 	}
 
-	if (curPos.x > 640)
+	if (curPos.x > 632)
 	{
 		randFloor->setCurRoomPos(Vec2((cm.x + 1), cm.y));
 		player->setPosition(Vec2(0.0f, cp.y));
 		currentMap = randFloor->getCurMap();
 	}
 
-	if (curPos.y < 0) 
+	if (curPos.y < -8) 
 	{
 		randFloor->setCurRoomPos(Vec2(cm.x, (cm.y-1)));
 		player->setPosition(Vec2(cp.x, 464.0f));
 		currentMap = randFloor->getCurMap();
 	}
 
-	if (curPos.y > 480)
+	if (curPos.y > 472)
 	{
 		randFloor->setCurRoomPos(Vec2(cm.x, (cm.y + 1)));
 		player->setPosition(Vec2(cp.x, 0.0f));
@@ -270,9 +289,34 @@ void GameState::update(float dt)
 	}
 
 
+	for (int i = 0; i < randFloor->getCurMap()->getNumCreatures(); i++)
+	{
+		if (Collision::boxBoxCollision(player->getPosition(), player->getDimensions(), randFloor->getCurMap()->getCreatureByIndex(i)->getPosition(), randFloor->getCurMap()->getCreatureByIndex(i)->getDimensions()))
+		{
+			if (player->canDamage())
+			{
+				player->setHit(true);
+				player->setCanDamage(false);
+			}
+			
+		}
+	}
+
+	
+		if (player->getHealth() <= 0)
+		{
+			if (mode == 0)
+			{
+				stateManager->changeState(new GameOverState(stateManager, platform, ttmng, cmng, mmng, pms));
+			}
+			else if (mode == 1) {
+				stateManager->popLastState();
+			}
+		}
+	
+	
 
 
-//	if (player->)
 }
 
 void GameState::render()
@@ -284,12 +328,18 @@ void GameState::render()
 
 
 	mm->render(platform->getRenderer());
+
+	health->render(platform->getRenderer());
+
+	
+	
 }
 
 void GameState::load()
 {
 
 	
+
 	currentMap = randFloor->getCurMap();
 
 
@@ -298,7 +348,6 @@ void GameState::load()
 	//grab the player type
 	playerType = cmng->getCharacterType("P0");
 	//shove the type into the map to create a new player
-	////currentMap->loadPlayer(playerType);
 
 
 	player = new Character(playerType->getTexture(), Vec2(320, 240), playerType);
@@ -317,7 +366,12 @@ void GameState::load()
 	
 
 	mm = new MiniMap(platform->getRenderer(), 0);
-	mm->buildMiniMap(randFloor, Vec2(700, 50));
+	mm->buildMiniMap(randFloor, Vec2(700, 15));
+
+
+	Texture *healthTexture = new Texture("res/img/heart.png", platform->getRenderer());
+
+	health = new HealthIcon(healthTexture, Vec2(5, 5), player);
 
 	
 }
@@ -325,4 +379,12 @@ void GameState::load()
 void GameState::unload()
 {
 	delete particles;
+	delete mm;
+	delete player;
+	delete health;
+
+	if (mode == 0)
+	{
+		delete randFloor;
+	}
 }
