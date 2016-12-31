@@ -10,8 +10,12 @@ State::State(StateManager* stateManager, Platform* platform)
 void State::startLoading()
 {
 	active = true;
-	load();
-
+	if (!loaded)
+	{
+		load();
+		loaded = true;
+	}
+	
 	Utility::log(Utility::I, stateName + " was loaded");
 }
 
