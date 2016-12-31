@@ -80,7 +80,7 @@ bool LoadState::eventHandler()
 
 void LoadState::update(float dt)
 {
-	stateManager->changeState(new MainMenuState(stateManager, platform, ttmng, cmng, mmng));
+	stateManager->changeState(new MainMenuState(stateManager, platform, ttmng, cmng, mmng, pms));
 }
 
 void LoadState::render()
@@ -95,14 +95,14 @@ void LoadState::load()
 	//Creature + character loading test
 	cmng = new CreatureManager("res/txt/creatures.txt", "res/txt/characters.txt", platform->getRenderer());
 	//load map
-	mmng = new MapManager("res/txt/map1.txt", ttmng, cmng);
-	mmng->loadMapData("res/txt/map2.txt", ttmng, cmng);
-	mmng->loadMapData("res/txt/map3.txt", ttmng, cmng);
-	mmng->loadMapData("res/txt/map4.txt", ttmng, cmng);
-	mmng->loadMapData("res/txt/map5.txt", ttmng, cmng);
-	mmng->loadMapData("res/txt/map6.txt", ttmng, cmng);
-	mmng->loadMapData("res/txt/map7.txt", ttmng, cmng);
-	mmng->loadMapData("res/txt/map8.txt", ttmng, cmng);
+
+	mmng = new MapManager("res/txt", ttmng, cmng, 0);
+
+
+
+
+
+	pms = new PauseMenuState(stateManager, platform, ttmng, cmng, mmng);
 
 
 }
