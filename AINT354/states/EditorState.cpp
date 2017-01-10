@@ -65,7 +65,10 @@ bool EditorState::eventHandler()
 			{
 				if (Collision::pointBoxCollision(mousePos, editorButtons[i]->getPosition(), editorButtons[i]->getDimensions()))
 				{
-					editorButtons[i]->setHover(true);
+					if (!editorButtons[i]->getSelected())
+					{
+						editorButtons[i]->setHover(true);
+					}
 				}
 				else {
 					editorButtons[i]->setHover(false);
@@ -198,6 +201,18 @@ bool EditorState::eventHandler()
 					exportRoomAsTemplate();
 				}
 
+				if (Collision::pointBoxCollision(mousePos, paintBtn->getPosition(), paintBtn->getDimensions()))
+				{
+					paintBtn->setSelected(true);
+					eraseBtn->setSelected(false);
+				}
+
+				if (Collision::pointBoxCollision(mousePos, eraseBtn->getPosition(), eraseBtn->getDimensions()))
+				{
+					paintBtn->setSelected(false);
+					eraseBtn->setSelected(true);
+				}
+
 
 			break;
 				
@@ -260,15 +275,30 @@ void EditorState::update(float dt)
 	{
 		if (Collision::pointBoxCollision(mousePos, randFloor->getPosition()+Vec2(32,32), randFloor->getDimensions() - Vec2(64,64)))
 		{
-			if (tileSelection->getTypeSelected() == "O")
+			if (paintBtn->getSelected())
 			{
-				randFloor->getCurMap()->changeTileType("O", mousePos / 32, tileTypeSelected, ttmng);
+				if (tileSelection->getTypeSelected() == "O")
+				{
+					randFloor->getCurMap()->changeTileType("O", mousePos / 32, tileTypeSelected, ttmng);
+				}
+				else if (tileSelection->getTypeSelected() == "B") {
+					randFloor->getCurMap()->changeTileType("B", mousePos / 32, tileTypeSelected, ttmng);
+				}
+				else if (tileSelection->getTypeSelected() == "C") {
+					randFloor->getCurMap()->addCreature(mousePos, cmng->getCreatureType("A0"));
+				}
 			}
-			else if (tileSelection->getTypeSelected() == "B") {
-				randFloor->getCurMap()->changeTileType("B", mousePos / 32, tileTypeSelected, ttmng);
-			}
-			else if (tileSelection->getTypeSelected() == "C") {
-				randFloor->getCurMap()->addCreature(mousePos, cmng->getCreatureType("A0"));
+			else if (eraseBtn->getSelected()) {
+				if (tileSelection->getTypeSelected() == "O")
+				{
+					randFloor->getCurMap()->changeTileType("O", mousePos / 32, "XX", ttmng);
+				}
+				else if (tileSelection->getTypeSelected() == "B") {
+					randFloor->getCurMap()->changeTileType("B", mousePos / 32, "XX", ttmng);
+				}
+				else if (tileSelection->getTypeSelected() == "C") {
+					randFloor->getCurMap()->changeTileType("C", mousePos / 32, "XX", ttmng);
+				}
 			}
 		}
 	}
@@ -299,7 +329,7 @@ void EditorState::render()
 		white->pushToScreen(platform->getRenderer(), Vec2(700, 15+(j * 15)), Vec2(10 * 20, 1));
 	}
 
-	genMapBtn->render(platform->getRenderer());
+	
 
 	numRoomsSlider->render(platform->getRenderer());
 
@@ -324,10 +354,6 @@ void EditorState::render()
 
 
 
-	bgLayerBtn->render(platform->getRenderer());
-	objLayerBtn->render(platform->getRenderer());
-	crLayerBtn->render(platform->getRenderer());
-
 
 	layerText->renderText(platform->getRenderer(), Vec2(670, 285), Vec2(50, 20));
 	bgText->renderText(platform->getRenderer(), Vec2(690, 305), Vec2(100,20));
@@ -336,13 +362,23 @@ void EditorState::render()
 	enemyText->renderText(platform->getRenderer(), Vec2(670, 493), Vec2(50, 20));
 
 
-	testMapBtn->render(platform->getRenderer());
+	
 
 
 
+	bgLayerBtn->render(platform->getRenderer());
+	objLayerBtn->render(platform->getRenderer());
+	crLayerBtn->render(platform->getRenderer());
+
+	for (int i = 0; i < editorButtons.size(); i++)
+	{
+		editorButtons[i]->render(platform->getRenderer());
+	}
+	/*testMapBtn->render(platform->getRenderer());
 	expMapBtn->render(platform->getRenderer());
 	impMapBtn->render(platform->getRenderer());
 	expRoomBtn->render(platform->getRenderer());
+	genMapBtn->render(platform->getRenderer());*/
 
 	enemy->render(platform->getRenderer());
 }
@@ -372,7 +408,7 @@ void EditorState::load()
 	genMapBtn = new Button(genTexture, Vec2(750, 175), Vec2(100, 46), Vec2(0, 0));
 
 	Texture *testMapTexture = new Texture("res/img/buttons/testmapBtn.png", platform->getRenderer());
-	testMapBtn = new Button(testMapTexture, Vec2(320, 485), Vec2(100, 46), Vec2(0, 0));
+	testMapBtn = new Button(testMapTexture, Vec2(272, 485), Vec2(100, 46), Vec2(0, 0));
 
 	Texture *impTexture = new Texture("res/img/buttons/importBtn.png", platform->getRenderer());
 	impMapBtn = new Button(impTexture, Vec2(0, 485), Vec2(50, 23), Vec2(0, 0));
@@ -411,6 +447,17 @@ void EditorState::load()
 	objLayerBtn = new Button(btn, Vec2(885, 305), Vec2(16, 16), Vec2(0, 0));
 	crLayerBtn = new Button(btn, Vec2(725, 495), Vec2(16, 16), Vec2(0, 0));
 	bgLayerBtn->setSelected(true);
+
+	paintTex = new Texture("res/img/buttons/paint.png", platform->getRenderer());
+	eraseTex = new Texture("res/img/buttons/erase.png", platform->getRenderer());
+
+	paintBtn = new Button(paintTex, Vec2(540, 490), Vec2(32, 32), Vec2(0, 0));
+	eraseBtn = new Button(eraseTex, Vec2(572, 490), Vec2(32, 32), Vec2(0, 0));
+
+	paintBtn->setSelected(true);
+
+	editorButtons.push_back(paintBtn);
+	editorButtons.push_back(eraseBtn);
 
 
 	layerText = new Texture(platform->getRenderer(), "Layer: ", font, { 255,255,255 });
@@ -652,140 +699,154 @@ void EditorState::exportLevelToFile(std::string fn)
 void EditorState::exportRoomAsTemplate()
 {
 
-	MapRoom *mr = randFloor->getCurMap();
+	int msgbox = MessageBox(
+		NULL,
+		(LPCWSTR)L"Are you sure?",
+		(LPCWSTR)L"Confirmation create template",
+		MB_YESNO
+	);
 
-	std::unordered_map<std::string, std::vector<std::vector<std::string>>> rts = mr->getRoomTilesStrings();
-	std::vector<std::string> rcs = mr->getRoomCreaturesStrings();
+	Utility::log(Utility::I, Utility::intToString(msgbox));
 
-	std::vector<std::string> lIDs = mr->getLayerIDs();
-
-	int a = mmng->getNumberMaps() + 1;
-
-
-
-	std::ostringstream oss;
-	oss << a;
-	std::string filePath = "res/txt/map" + oss.str() + ".txt";
-
-
-	std::ofstream roomFile(filePath);
-
-
-
-	if (roomFile.is_open())
+	if (msgbox == 6)
 	{
-		Utility::log(Utility::I, "New file, yay");
+		MapRoom *mr = randFloor->getCurMap();
+
+		std::unordered_map<std::string, std::vector<std::vector<std::string>>> rts = mr->getRoomTilesStrings();
+		std::vector<std::string> rcs = mr->getRoomCreaturesStrings();
+
+		std::vector<std::string> lIDs = mr->getLayerIDs();
+
+		int a = mmng->getNumberMaps() + 1;
 
 
-		if (a < 10)
+
+		std::ostringstream oss;
+		oss << a;
+		std::string filePath = "res/txt/map" + oss.str() + ".txt";
+
+
+		std::ofstream roomFile(filePath);
+
+
+
+		if (roomFile.is_open())
 		{
-			roomFile << "M0";
-		}
-		else {
-			roomFile << "M";
-		}
-		
-		roomFile << a;
+			Utility::log(Utility::I, "New file, yay");
 
-		roomFile << "\n";
 
-		roomFile << "20";
+			if (a < 10)
+			{
+				roomFile << "M0";
+			}
+			else {
+				roomFile << "M";
+			}
 
-		roomFile << "\n";
+			roomFile << a;
 
-		roomFile << "15";
-
-		roomFile << "\n";
-		
-		roomFile << "3";
-
-		roomFile << "\n";
-
-		roomFile << "32";
-
-		roomFile << "\n";
-
-		roomFile << "32";
-
-		roomFile << "\n";
-
-		for (int i = 0; i < 3; i++)
-		{
-
-			roomFile << lIDs[i];
 			roomFile << "\n";
 
+			roomFile << "20";
 
-			int ySize = rts["B"].size();
+			roomFile << "\n";
 
+			roomFile << "15";
 
+			roomFile << "\n";
 
-			for (int y = 0; y < ySize; y++)
+			roomFile << "3";
+
+			roomFile << "\n";
+
+			roomFile << "32";
+
+			roomFile << "\n";
+
+			roomFile << "32";
+
+			roomFile << "\n";
+
+			for (int i = 0; i < 3; i++)
 			{
-				int xSize = rts["B"][0].size();
 
-				if (lIDs[i] == "O" || lIDs[i] == "B")
+				roomFile << lIDs[i];
+				roomFile << "\n";
+
+
+				int ySize = rts["B"].size();
+
+
+
+				for (int y = 0; y < ySize; y++)
 				{
-					for (int x = 0; x < xSize; x++)
+					int xSize = rts["B"][0].size();
+
+					if (lIDs[i] == "O" || lIDs[i] == "B")
 					{
-
-
-						std::string tileID;
-						if (lIDs[i] == "O")
+						for (int x = 0; x < xSize; x++)
 						{
-							if ((y == 0 || y == 14) && x > 0 && x < 19)
+
+
+							std::string tileID;
+							if (lIDs[i] == "O")
 							{
-								tileID = "W0";
-							}
-							else if ((x == 0 || x == 19) && y > 0 && y < 14)
-							{
-								tileID = "W1";
+								if ((y == 0 || y == 14) && x > 0 && x < 19)
+								{
+									tileID = "W0";
+								}
+								else if ((x == 0 || x == 19) && y > 0 && y < 14)
+								{
+									tileID = "W1";
+								}
+								else {
+									tileID = rts[lIDs[i]][y][x];
+								}
+
+								int g = 0;
 							}
 							else {
 								tileID = rts[lIDs[i]][y][x];
 							}
 
-							int g = 0;
+
+							//Get the tile
+
+
+
+
+							roomFile << tileID;
+							roomFile << " ";
 						}
-						else {
-							tileID = rts[lIDs[i]][y][x];
-						}
-				
 
-						//Get the tile
-						
-						
-
-
-						roomFile << tileID;
-						roomFile << " ";
+						roomFile << "\n";
 					}
-
-					roomFile << "\n";
-				}
-				else if (lIDs[i] == "C")
-				{
-
-					for (int x = 0; x < xSize; x++)
+					else if (lIDs[i] == "C")
 					{
-						//Get the creature
-						std::string creatureID = rcs[y*xSize + x];
 
-						roomFile << creatureID;
-						roomFile << " ";
+						for (int x = 0; x < xSize; x++)
+						{
+							//Get the creature
+							std::string creatureID = rcs[y*xSize + x];
+
+							roomFile << creatureID;
+							roomFile << " ";
 
 
+						}
+						roomFile << "\n";
 					}
-					roomFile << "\n";
+
 				}
-
 			}
-		}
-		roomFile.close();
-		mmng->loadMapData(filePath, ttmng, cmng);
+			roomFile.close();
+			mmng->loadMapData(filePath, ttmng, cmng);
 
+		}
+		else {
+			Utility::log(Utility::I, "Failed :(	");
+		}
 	}
-	else {
-		Utility::log(Utility::I, "Failed :(	");
-	}
+
+	
 }
