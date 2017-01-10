@@ -1,33 +1,92 @@
 2
-A res/img/objects.png 32 32
+O res/img/objects.png 32 32
 B res/img/backgroundTiles.png 32 32
-26
-A XX 0 0 0 0
-A W0 1 0 0 0
-A W1 1 0 1 0
-A W2 1 0 2 0
-A W3 1 0 3 0
-A W4 1 0 4 0
-A W5 1 0 5 0
-A W6 1 0 6 0
-A W7 1 0 7 0
-A W8 1 0 8 0
-A W9 1 0 9 0
-A D0 0 1 0 1
-A D1 0 1 1 1
-A D2 0 1 2 1
-A D3 0 1 3 1
-A D4 0 1 4 1
-A D5 0 1 5 1
-A D6 0 1 0 2
-A D7 0 1 1 2
-A D8 0 1 2 2
-A D9 0 1 3 2
-A DA 0 1 4 2
-A DB 0 1 5 2
-A S0 1 1 6 1
+82
+O XX 0 0 0 0
+O W0 1 0 0 0
+O W1 1 0 1 0
+O W2 1 0 2 0
+O W3 1 0 3 0
+O W4 1 0 4 0
+O W5 1 0 5 0
+O W6 1 0 6 0
+O W7 1 0 7 0
+O W8 1 0 0 1
+O W9 1 0 1 1
+O WA 0 1 2 1
+O WB 0 1 3 1
+O WC 0 1 4 1
+O WD 0 1 5 1
+O WE 0 1 6 1
+O WF 0 1 7 1
+O V0 0 1 0 2
+O V1 0 1 1 2
+O V2 0 1 2 2
+O V3 0 1 3 2
+O V4 0 1 4 2
+O V5 0 1 5 2
+O V6 0 1 6 2
+O V7 0 1 7 2
+O V8 0 1 0 3
+O V9 0 1 1 3
+O VA 0 1 2 3
+O VB 0 1 3 3
+O VC 0 1 4 3
+O VD 0 1 5 3
+O VE 0 1 6 3
+O VF 0 1 7 3
+O U0 0 1 0 4
+O U1 0 1 1 4
+O U2 0 1 2 4
+O U3 0 1 3 4
+O U4 0 1 4 4
+O U5 0 1 5 4
+O U6 0 1 6 4
+O S0 1 1 7 4
+B XX 0 0 0 0
 B G0 0 0 0 0
-B R0 0 0 1 0
+B G1 0 0 1 0
+B G2 0 0 2 0
+B G3 0 0 3 0
+B G4 0 0 4 0
+B G5 0 0 5 0
+B G6 0 0 6 0
+B G7 0 0 7 0
+B G8 0 0 0 1
+B G9 0 0 1 1
+B GA 0 0 2 1
+B GB 0 0 3 1
+B GC 0 0 4 1
+B GD 0 0 5 1
+B GE 0 0 6 1
+B GF 0 0 7 1
+B H0 0 0 0 2
+B H1 0 0 1 2
+B H2 0 0 2 2
+B H3 0 0 3 2
+B H4 0 0 4 2
+B H5 0 0 5 2
+B H6 0 0 6 2
+B H7 0 0 7 2
+B H8 0 0 0 3
+B H9 0 0 1 3
+B HA 0 0 2 3
+B HB 0 0 3 3
+B HC 0 0 4 3
+B HD 0 0 5 3
+B HE 0 0 6 3
+B HF 0 0 7 3
+B I0 0 0 0 4
+B I1 0 0 1 4
+B I2 0 0 2 4
+B I3 0 0 3 4
+B I4 0 0 4 4
+B I5 0 0 5 4
+B I6 0 0 6 4
+B I7 0 0 7 4
+
+
+
 
 //Comments:
 //Number of Tile Groups
@@ -58,3 +117,5 @@ B R0 0 0 1 0
 //DB = Door Double Bottom (Left) --
 //Grass
 //Rock
+//O XX 0 0 0 0
+//B XX 0 0 0 0
