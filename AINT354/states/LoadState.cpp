@@ -80,7 +80,8 @@ bool LoadState::eventHandler()
 
 void LoadState::update(float dt)
 {
-	stateManager->changeState(new MainMenuState(stateManager, platform, ttmng, cmng, mmng, pms));
+	stateManager->changeState(new EditorState(stateManager, platform, ttmng, cmng, mmng, pms));
+	//stateManager->changeState(new MainMenuState(stateManager, platform, ttmng, cmng, mmng, pms));
 }
 
 void LoadState::render()

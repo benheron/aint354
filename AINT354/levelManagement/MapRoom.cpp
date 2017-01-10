@@ -26,6 +26,22 @@ MapRoom::MapRoom(MapManager *mpmng, Vec2 pos, int e)
 	exists = e;
 }
 
+
+MapRoom::MapRoom(MapManager *mpmng, Vec2 pos, int e, int index)
+{
+	RoomTemplate *rt = mpmng->getRandomMapFromIndex(index);
+	roomTiles = rt->getRoomTiles();
+	roomCreatures = rt->getCreatures();
+
+	layerIDs = rt->getLayerIDs();
+	roomPos = pos;
+
+	exists = e;
+}
+
+
+
+
 MapRoom::~MapRoom()
 {
 
@@ -63,11 +79,26 @@ MapRoom::~MapRoom()
 
 }
 
-void MapRoom::createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng, Vec2 pos, int type)
+void MapRoom::createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng, Vec2 pos, int type, bool fromlevel, int index)
 {
 	//generate new room from the template data
 	//this allows the same room to be used but hold different data incase some is changed mid-gameplay
-	RoomTemplate *rt = mpmng->getRandomMap();
+	RoomTemplate *rt;
+
+	if (fromlevel)
+	{
+		rt = mpmng->getRandomMapFromIndex(index);
+	}
+	else {
+		if (index > -1)
+		{
+			rt = mpmng->getRandomMapFromIndex(index);
+		}
+		else {
+			rt = mpmng->getRandomMap();
+		}
+	}
+	
 
 
 
@@ -91,6 +122,9 @@ void MapRoom::createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureMana
 
 	std::unordered_map<std::string, std::vector<std::vector<std::string>>> roomData = rt->getRoomTileData();
 	std::vector<std::string> creatureData = rt->getCreatureData();
+
+	roomTilesStrings = roomData;
+	roomCreatureStrings = creatureData;
 
 
 	std::unordered_map<std::string, std::vector<std::vector<Tile*>>> roomys;
@@ -151,9 +185,9 @@ void MapRoom::createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureMana
 
 					if (creatureID != "XX")
 					{
-						Vec2 pos = Vec2((x * 32), (y * 32));
 
 						CreatureType* creatureType = cmng->getCreatureType(creatureID);
+						Vec2 pos = Vec2((x * 32 + 16 - (creatureType->getSpriteDimensions().x / 2)), (y * 32 + 16 - (creatureType->getSpriteDimensions().y / 2)));
 						Vec2 spriteDimensions = creatureType->getSpriteDimensions();
 						Texture* creatureTexture = creatureType->getTexture();
 
@@ -170,6 +204,7 @@ void MapRoom::createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureMana
 
 
 	//randomise creature placements
+/*
 	for (int i = 0; i < roomCreatures.size(); i++)
 	{
 		int a = Utility::randomInt(50, 600);
@@ -178,7 +213,7 @@ void MapRoom::createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureMana
 		roomCreatures[i]->setPosition(Vec2(a, b));
 
 		//Utility::log(Utility::I, Utility::intToString(a) + ", " + Utility::intToString(b));
-	}
+	}*/
 
 	if (type == 1)
 	{
@@ -229,6 +264,60 @@ void MapRoom::loadPlayer(CharacterType *pt)
 	player = new Character(pt->getTexture(), Vec2(25,25), pt);
 
 	playerLoaded = true;
+}
+
+void MapRoom::addCreature(Vec2 p, CreatureType *ct)
+{
+	Texture* creatureTexture = ct->getTexture();
+
+
+
+	int x = (p.x / 32);
+	x *= 32;
+	int y = (p.y / 32);
+	y *= 32;
+
+	Vec2 np = Vec2(x, y);
+
+
+	int nx = np.x + 16 - (ct->getSpriteDimensions().x / 2);
+	int ny = np.y + 16 - (ct->getSpriteDimensions().y / 2);
+
+	Vec2 nnp = Vec2(nx, ny);
+
+	bool sameAsAnother = false;
+	for (int i = 0; i < roomCreatures.size(); i++)
+	{
+		if (nnp == roomCreatures[i]->getPosition())
+		{
+			sameAsAnother = true;
+			Utility::log(Utility::I, "Same as another creature");
+		}
+	}
+
+
+	for (int i = 0; i < roomTiles["O"].size(); i++)
+	{
+		for (int j = 0; j < roomTiles["O"][i].size(); j++)
+		{
+			std::string t = roomTiles["O"][i][j]->getTileTypeID();
+			if (t != "XX" && np == roomTiles["O"][i][j]->getPosition())
+			{
+				sameAsAnother = true;
+				Utility::log(Utility::I, "Same as another tile");
+				
+			}
+		}
+	}
+
+	if (!sameAsAnother)
+	{
+		roomCreatures.push_back(new Creature(creatureTexture, nnp, Vec2(13, 19), ct));
+		roomCreatureStrings[(y/32)*20 + (x/32)] = ct->getID();
+		Utility::log(Utility::I, "Not same as another creature or tile");
+	}
+
+	Utility::log(Utility::I, Utility::intToString(roomCreatures.size()));
 }
 
 
@@ -330,5 +419,62 @@ int MapRoom::checkCollide(Entity *e)
 
 void MapRoom::changeTileType(std::string layer, Vec2 tilePos, std::string tileID, TileTypeManager *ttmng)
 {
-	roomTiles[layer][tilePos.y][tilePos.x]->setTileType(tileID, ttmng);
+	if (layer != "C")
+	{
+		roomTiles[layer][tilePos.y][tilePos.x]->setTileType(tileID, ttmng);
+		roomTilesStrings[layer][tilePos.y][tilePos.x] = tileID;
+	}
+	
+
+	if (layer == "O" || layer == "C")
+	{
+		for (int i = 0; i < roomCreatures.size(); i++)
+		{
+			Vec2 f = roomCreatures[i]->getPosition();
+			int chX = f.x / 32;
+			chX *= 32;
+			int chY = f.y / 32;
+			chY *= 32;
+
+			Vec2 checkPos = Vec2(chX, chY);
+
+			Vec2 realTilePos((int)tilePos.x * 32, (int)tilePos.y * 32);
+
+			if (checkPos == realTilePos)
+			{
+				delete roomCreatures[i];
+				roomCreatures.erase(roomCreatures.begin() + i);
+				Utility::log(Utility::I, "Same as another creature");
+			}
+		}
+	}
+	
+}
+
+
+
+std::unordered_map<std::string, std::vector<std::vector<std::string>>> MapRoom::getRoomTilesStrings()
+{
+	return roomTilesStrings;
+}
+
+std::vector<std::string> MapRoom::getRoomCreaturesStrings()
+{
+	return roomCreatureStrings;
+}
+
+std::vector<std::string> MapRoom::getLayerIDs()
+{
+	return layerIDs;
+}
+
+
+Creature* MapRoom::getCreatureByIndex(int index)
+{
+	return roomCreatures[index];
+}
+
+int MapRoom::getNumCreatures()
+{
+	return roomCreatures.size();
 }

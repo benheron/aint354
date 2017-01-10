@@ -3,6 +3,9 @@
 #include "../Entity.h"
 #include "CreatureType.h"
 
+/**
+@brief Contains all the data and functions dealing with the Creature.
+*/
 class Creature : public Entity
 {
 public:
@@ -45,6 +48,13 @@ public:
 	@param renderer A pointer to the renderer.
 	*/
 	virtual void render(SDL_Renderer* renderer);
+
+
+	/**
+	@brief Get the creature type
+	@return The creature type
+	*/
+	CreatureType* getCreatureType();
 
 
 private:

@@ -1,6 +1,7 @@
 ﻿  EditorState.cpp
-d:\assignments\aint354\aint354\project\aint354\aint354\states\editorstate.cpp(190): warning C4065: switch statement contains 'default' but no 'case' labels
-d:\assignments\aint354\aint354\project\aint354\aint354\states\editorstate.cpp(238): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-d:\assignments\aint354\aint354\project\aint354\aint354\states\editorstate.cpp(239): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  AINT354.vcxproj -> D:\assignments\AINT354\AINT354\project\AINT354\Debug\AINT354.exe
-  AINT354.vcxproj -> D:\assignments\AINT354\AINT354\project\AINT354\Debug\AINT354.pdb (Full PDB)
+d:\assignments\aint354 - tool\aint354\project\aint354\aint354\states\editorstate.cpp(64): warning C4018: '<': signed/unsigned mismatch
+d:\assignments\aint354 - tool\aint354\project\aint354\aint354\states\editorstate.cpp(338): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+d:\assignments\aint354 - tool\aint354\project\aint354\aint354\states\editorstate.cpp(339): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+d:\assignments\aint354 - tool\aint354\project\aint354\aint354\states\editorstate.cpp(373): warning C4018: '<': signed/unsigned mismatch
+  AINT354.vcxproj -> D:\assignments\AINT354 - Tool\AINT354\project\AINT354\Debug\AINT354.exe
+  AINT354.vcxproj -> D:\assignments\AINT354 - Tool\AINT354\project\AINT354\Debug\AINT354.pdb (Full PDB)

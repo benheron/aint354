@@ -2,13 +2,14 @@
 #include "../Utility.h"
 #include "../Collision.h"
 
-MainMenuState::MainMenuState(StateManager* manager, Platform *platform, TileTypeManager *t, CreatureManager *c, MapManager *m)
+MainMenuState::MainMenuState(StateManager* manager, Platform *platform, TileTypeManager *t, CreatureManager *c, MapManager *m, PauseMenuState *p)
 	: State(manager, platform)
 {
 	stateName = "MainMenuState";
 	ttmng = t;
 	cmng = c;
 	mmng = m;
+	pms = p;
 }
 
 MainMenuState::~MainMenuState()
@@ -90,17 +91,20 @@ void MainMenuState::update(float dt)
 {
 	if (redDown)
 	{
-		stateManager->changeState(new GameState(stateManager, platform, ttmng, cmng, mmng, new RandMap(mmng, ttmng, cmng, 9)));
+		stateManager->changeState(new GameState(stateManager, platform, ttmng, cmng, mmng, new RandMap(mmng, ttmng, cmng, 9), 0, pms));
+		return;
 	} else if  (greenDown)
 	{
 		//change to editor state
-		stateManager->changeState(new EditorState(stateManager, platform, ttmng, cmng, mmng));
+		stateManager->changeState(new EditorState(stateManager, platform, ttmng, cmng, mmng, pms));
+		return;
 	}
+	
 }
 
 void MainMenuState::render()
 {
-	redPlay->render(platform->getRenderer());
+ 	redPlay->render(platform->getRenderer());
 	greenEdit->render(platform->getRenderer());
 
 

@@ -22,6 +22,9 @@ public:
 	MapRoom(MapManager *mpmng, Vec2 pos, int e);
 
 
+	MapRoom::MapRoom(MapManager *mpmng, Vec2 pos, int e, int index);
+
+
 	/**
 	@brief Room destructor
 	*/
@@ -45,7 +48,7 @@ public:
 	/**
 	@brief
 	*/
-	void createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng, Vec2 pos, int type);
+	void createRoom(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng, Vec2 pos, int type, bool fromlevel, int index);
 
 	/**
 	@brief
@@ -96,6 +99,19 @@ public:
 
 	void changeTileType(std::string layer, Vec2 tilePos, std::string tileID, TileTypeManager *ttmng);
 
+	std::unordered_map<std::string, std::vector<std::vector<std::string>>> getRoomTilesStrings();
+
+	std::vector<std::string> getRoomCreaturesStrings();
+
+	std::vector<std::string> getLayerIDs();
+
+	void addCreature(Vec2 p, CreatureType *ct);
+
+	Creature* getCreatureByIndex(int index);
+
+	int getNumCreatures();
+
+	
 
 private:
 
@@ -103,6 +119,10 @@ private:
 	std::vector<std::string> layerIDs;
 	///A 3D vector that contains all of the tiles. [Layer ID][Y Index][X Index]
 	std::unordered_map<std::string, std::vector<std::vector<Tile*>>> roomTiles;
+
+
+	std::unordered_map<std::string, std::vector<std::vector<std::string>>> roomTilesStrings;
+	std::vector<std::string> roomCreatureStrings;
 
 	//An unordered map that contains all of the creatures. [Layer ID][Y Index][X Index]
 	//std::unordered_map<std::string, Creature*> mapCreatures;

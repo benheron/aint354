@@ -62,6 +62,12 @@ public:
 	 */
 	bool isActive() { return active; }
 
+	/**
+	@brief Set the active state to true or false
+	@param a Boolean to set active to
+	*/
+	void setActive(bool a) { active = a; }
+
 protected:
 	///Pointer to state manager
 	StateManager* stateManager;
@@ -71,6 +77,9 @@ protected:
 
 	/** @brief Is this state currently active */
 	bool active;
+
+	/** @brief Is this state currently loaded */
+	bool loaded;
 
 	/**
 	@brief Loads this State.

@@ -4,7 +4,9 @@
 #include "../entities/Entity.h"
 #include "SliderSquare.h"
 
-
+/**
+@brief A slider that holds values between a min and max. Uses SliderSquare
+*/
 class Slider {
 public:
 

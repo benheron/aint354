@@ -122,12 +122,15 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>D:\SDKs\SDL2\SDL2_all\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\SDKs\SDL2\SDL2_all\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -163,6 +166,7 @@
     <ClCompile Include="entities\creatures\Grunt.cpp" />
     <ClCompile Include="entities\Entity.cpp" />
     <ClCompile Include="entities\EntityWithMotion.cpp" />
+    <ClCompile Include="entities\GameHUD\HealthIcon.cpp" />
     <ClCompile Include="entities\particles\Particle.cpp" />
     <ClCompile Include="entities\particles\ParticleSystem.cpp" />
     <ClCompile Include="levelManagement\Map.cpp" />
@@ -177,12 +181,15 @@
     <ClCompile Include="levelManagement\TileType.cpp" />
     <ClCompile Include="levelManagement\TileTypeManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MenuAssetManager.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="ScreenElement.cpp" />
     <ClCompile Include="states\EditorState.cpp" />
+    <ClCompile Include="states\GameOverState.cpp" />
     <ClCompile Include="states\GameState.cpp" />
     <ClCompile Include="states\LoadState.cpp" />
     <ClCompile Include="states\MainMenuState.cpp" />
+    <ClCompile Include="states\PauseMenuState.cpp" />
     <ClCompile Include="states\State.cpp" />
     <ClCompile Include="states\StateManager.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -209,6 +216,7 @@
     <ClInclude Include="entities\creatures\Grunt.h" />
     <ClInclude Include="entities\Entity.h" />
     <ClInclude Include="entities\EntityWithMotion.h" />
+    <ClInclude Include="entities\GameHUD\HealthIcon.h" />
     <ClInclude Include="entities\particles\Particle.h" />
     <ClInclude Include="entities\particles\ParticleSystem.h" />
     <ClInclude Include="levelManagement\Map.h" />
@@ -222,12 +230,15 @@
     <ClInclude Include="levelManagement\TileSelection.h" />
     <ClInclude Include="levelManagement\TileType.h" />
     <ClInclude Include="levelManagement\TileTypeManager.h" />
+    <ClInclude Include="MenuAssetManager.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="ScreenElement.h" />
     <ClInclude Include="states\EditorState.h" />
+    <ClInclude Include="states\GameOverState.h" />
     <ClInclude Include="states\GameState.h" />
     <ClInclude Include="states\LoadState.h" />
     <ClInclude Include="states\MainMenuState.h" />
+    <ClInclude Include="states\PauseMenuState.h" />
     <ClInclude Include="states\State.h" />
     <ClInclude Include="states\StateManager.h" />
     <ClInclude Include="Texture.h" />

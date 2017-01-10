@@ -2,7 +2,9 @@
 #include "Entity.h"
 #include "SDL_ttf.h"
 
-
+/**
+@brief Creates all data for the button
+*/
 class Button : public Entity
 {
 public:
@@ -88,14 +90,25 @@ public:
 	bool getSelected();
 
 protected:
+	/**
+	@brief Builds the button in this function
+	*/
 	void buildButton();
 
+	///The button background
 	Texture *buttonBgr;
 
+	///The text used on the button
 	TTF_Font *font = NULL;
 
+	///If displaying the hover image
 	bool hover = false;
 
+	///if displaying the selected image
 	bool selected = false;
+
+
+
+
 
 };

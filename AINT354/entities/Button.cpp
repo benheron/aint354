@@ -35,13 +35,10 @@ void Button::update(float dt)
 
 void Button::render(SDL_Renderer *renderer)
 {
-	if (hover) {
-		texture->pushSpriteToScreen(renderer, pos, Vec2(spritePos.x, spriteDimensions.y), spriteDimensions);
+	if (selected) {
+		texture->pushSpriteToScreen(renderer, pos, Vec2(spritePos.x, spriteDimensions.y * 2), spriteDimensions);
 	}
-	else if  (selected) {
-		/************************************************************************/
-		/*         Need to change for all buttons                               */
-		/************************************************************************/
+	else if  (hover) {
 		
 		texture->pushSpriteToScreen(renderer, pos, Vec2(spritePos.x, spriteDimensions.y), spriteDimensions);
 	}

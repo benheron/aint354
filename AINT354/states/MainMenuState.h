@@ -7,6 +7,7 @@
 #include "../Texture.h"
 #include "GameState.h"
 #include "EditorState.h"
+#include "PauseMenuState.h"
 
 /**
 @class MainMenuState
@@ -23,7 +24,7 @@ public:
 	@param [in,out] platform - Platform containing OS dependent data.
 	*/
 
-	MainMenuState(StateManager* manager, Platform *platform, TileTypeManager *t, CreatureManager *c, MapManager *m);
+	MainMenuState(StateManager* manager, Platform *platform, TileTypeManager *t, CreatureManager *c, MapManager *m, PauseMenuState *pms);
 
 	virtual ~MainMenuState();
 
@@ -72,4 +73,5 @@ protected:
 	TileTypeManager *ttmng;
 	CreatureManager *cmng;
 	MapManager *mmng;
+	PauseMenuState *pms;
 };

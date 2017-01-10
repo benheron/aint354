@@ -32,8 +32,21 @@ public:
 	@param mpmn The Map Manager
 	@param ttmng The TileType Manager
 	@param cmng The Creature Manager
+	@param rooms The number of rooms to create including specials
 	*/
 	RandMap(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng, int rooms);
+
+
+	/**
+	@brief Creates a randomised number of maps.
+	@param mpmn The Map Manager
+	@param ttmng The TileType Manager
+	@param cmng The Creature Manager
+	@param usingLevelFile check if using a level file to create the entire map
+	*/
+	RandMap(MapManager *mpmng, TileTypeManager *ttmng, CreatureManager *cmng, bool usingLevelFile);
+
+
 
 	/**
 	@brief Map destructor.
@@ -70,6 +83,10 @@ public:
 	Vec2 getPosition();
 
 	Vec2 getDimensions();
+
+	int getNumRooms();
+
+	MapRoom* getRoom(int index);
 
 private:
 	//max width/height

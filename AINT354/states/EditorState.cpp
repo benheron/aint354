@@ -435,7 +435,7 @@ void EditorState::load()
 	//tile selection
 	Texture *grey = new Texture(platform->getRenderer(), 128, 128, 128);
 	tileSelection = new TileSelection(Vec2(670, 330), Vec2(8, 5), ttmng, white, grey);
-	tileTypeSelected = "XX";
+	tileTypeSelected = "G0";
 	tileSelection->setTypeSelected("B");
 
 

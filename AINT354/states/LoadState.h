@@ -6,9 +6,12 @@
 #include "../Platform.h"
 #include "../Texture.h"
 #include "MainMenuState.h"
+#include "PauseMenuState.h"
 #include "../entities/creatures/CreatureManager.h"
 #include "../levelManagement/MapManager.h"
 #include "../entities/Button.h"
+
+
 
 /**
 @class LoadState
@@ -65,5 +68,5 @@ protected:
 	CreatureManager *cmng;
 	MapManager *mmng;
 
-
+	PauseMenuState *pms;
 };

@@ -24,7 +24,7 @@ public:
 	@param tileTypeManager* A pointer to the TileTypeManager.
 	@param creatureManager A pointer to the CreatureManager
 	*/
-	MapManager(std::string filePath, TileTypeManager* tileTypeManager, CreatureManager* creatureManager);
+	MapManager(std::string filePath, TileTypeManager* tileTypeManager, CreatureManager* creatureManager, int type);
 
 	/**
 	@brief MapManager destructor.
@@ -36,7 +36,7 @@ public:
 	@param filePath The path to the file which holds the map data.
 	@param tileTypeManager* A pointer to the TileTypeManager.
 	*/
-	void loadMapData(std::string filePath, TileTypeManager* tileTypeManager, CreatureManager* creatureManager);
+	bool loadMapData(std::string filePath, TileTypeManager* tileTypeManager, CreatureManager* creatureManager);
 
 	/**
 	@brief Gets the Map data.
@@ -51,7 +51,18 @@ public:
 	*/
 	RoomTemplate* getRandomMap();
 
+	std::vector<Vec2> getRoomPositions();
+
+	RoomTemplate* getRandomMapFromIndex(int i);
+
+	int getNumberMaps();
+
 private:
+
+	void loadMapDataForLevel(std::string filePath, TileTypeManager* tileTypeManager, CreatureManager* creatureManager);
+
+
+
 	///A vector to hold all of the map IDs.
 	std::vector<std::string> roomIDs;
 	///A vector to hold all of the maps.
@@ -60,7 +71,7 @@ private:
 	///A different vector to hold maps for random lookups
 	std::vector<RoomTemplate*> rMaps;
 
-
+	std::vector<Vec2> roomPositions;
 
 
 };

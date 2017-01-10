@@ -3,7 +3,9 @@
 #include "../Entity.h"
 #include "CharacterType.h"
 
-
+/**
+@brief Creates all data for the character
+*/
 class Character : public Entity
 {
 public:
@@ -50,17 +52,70 @@ public:
 
 	/**
 	@brief Set the character type
-
+	@param charType The character type
 	*/
 	void setCharacterType(CharacterType* charType);
 
+
+	/**
+	@brief Get the character type
+	@return The character type
+	*/
 	CharacterType* getCharacterType();
 
+	/**
+	@brief Set the character health
+	@param h The health to set to
+	*/
+	void setHealth(int h);
+
+	/**
+	@brief Get the character health
+	@return The character health
+	*/
+	int getHealth();
+
+	/**
+	@brief Set if the character has been hit
+	@param b If the character has been hit
+	*/
+	void setHit(bool b);
+
+	/**
+	@brief Get if the character has been hit
+	@return True if hit false if not
+	*/
+	bool isHit();
+
+	/**
+	@brief Set if the character can be damaged
+	@param d If the character has been hit
+
+	*/
+	void setCanDamage(bool d);
+
+	/**
+	@brief Check if the character can be hit
+	@return true if can hit false if not
+	*/
+	bool canDamage();
 private:
 	///Reference to CharacterType
 	CharacterType *characterType;
 
 	Vec2 lastPos = Vec2(0);
-	
 
+	///The health of the character
+	int health = 3;
+
+
+	///if the character has been hit
+	bool hit = false;
+
+	///if the character can currently be damaged
+	bool canDmg = true;
+
+
+	///timer value
+	float timer;
 };

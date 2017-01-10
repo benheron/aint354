@@ -58,6 +58,12 @@
     <Filter Include="Source Files\UI">
       <UniqueIdentifier>{864341b5-0b6f-46c5-a28f-bd9c852d2fa2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Entities\GameHUD">
+      <UniqueIdentifier>{95c7af32-31b2-4588-bec3-1c0093e15595}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\GameHUD">
+      <UniqueIdentifier>{ead0ece3-ec08-4f1f-ba8b-2dae3a027fe1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -178,6 +184,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="states\LoadState.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuAssetManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="entities\GameHUD\HealthIcon.cpp">
+      <Filter>Source Files\Entities\GameHUD</Filter>
+    </ClCompile>
+    <ClCompile Include="states\GameOverState.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="states\PauseMenuState.cpp">
       <Filter>Source Files\States</Filter>
     </ClCompile>
   </ItemGroup>
@@ -312,6 +330,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="states\LoadState.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="states\PauseMenuState.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuAssetManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="entities\GameHUD\HealthIcon.h">
+      <Filter>Header Files\Entities\GameHUD</Filter>
+    </ClInclude>
+    <ClInclude Include="states\GameOverState.h">
       <Filter>Header Files\States</Filter>
     </ClInclude>
   </ItemGroup>

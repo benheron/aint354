@@ -18,6 +18,7 @@ public:
 	@param renderer A pointer to the renderer
 	*/
 	CharacterManager(std::string filepath, SDL_Renderer *renderer);
+
 	~CharacterManager();
 
 	/**

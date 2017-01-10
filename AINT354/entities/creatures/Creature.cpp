@@ -32,3 +32,8 @@ void Creature::render(SDL_Renderer* renderer)
 		creatureType->render(renderer, pos, dimensions, state, frame);
 	}
 }
+
+CreatureType* Creature::getCreatureType()
+{
+	return creatureType;
+}

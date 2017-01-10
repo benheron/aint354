@@ -1,16 +1,21 @@
 #pragma once
 
 #include "State.h"
+#include "StateManager.h"
+#include "PauseMenuState.h"
+#include "GameOverState.h"
+#include "../Platform.h"
 #include "../levelManagement/TileTypeManager.h"
 #include "../levelManagement/MapManager.h"
 #include "../levelManagement/Map.h"
-#include "../Platform.h"
 #include "../entities/particles/ParticleSystem.h"
 #include "../entities/creatures/CreatureManager.h"
 #include "../levelManagement/RandMap.h"
 #include "../levelManagement/MapRoom.h"
 
 #include "../levelManagement/MiniMap.h"
+
+#include "../entities/GameHUD/HealthIcon.h"
 
 //#include "..entities/creatures/Character.h"
 
@@ -29,7 +34,7 @@ public:
 	@param [in,out] platform - Platform containing OS dependent data.
 	*/
 
-	GameState(StateManager* manager, Platform *platform, TileTypeManager *t, CreatureManager *c, MapManager *m, RandMap *map);
+	GameState(StateManager* manager, Platform *platform, TileTypeManager *t, CreatureManager *c, MapManager *m, RandMap *map, int mode, PauseMenuState *p);
 	
 	virtual ~GameState();
 
@@ -53,6 +58,9 @@ public:
 	void render();
 
 protected:
+
+
+	
 
 	/**
 	@brief Loads this State.
@@ -80,12 +88,21 @@ protected:
 
 	TileTypeManager *ttmng;
 	CreatureManager *cmng;
-	MapManager *mmng;
+ 	MapManager *mmng;
+
+	PauseMenuState *pms;
 
 
+	int mode;
 
+	int changeThisState = 0;
 
-
+	bool esc = false;
 
 	bool kUp = false, kDown = false, kLeft = false, kRight = false;
+
+
+
+
+	HealthIcon *health;
 };

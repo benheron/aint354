@@ -19,11 +19,19 @@ public:
 	~StateManager();
 
 	/**
-	@brief Add a state on top of the previous state.
+	@brief Add a new state on top of the previous state.
 	
 	@param [in,out] state - The new state.
 	*/
 	void addState(State* state);
+
+
+	/**
+	@brief Add an existing state on top of the previous state.
+
+	@param [in,out] state - The new state.
+	*/
+	void addExistingState(State* state);
 
 	/**
 	@brief Resets the Timer class otherwise conflicts happen
@@ -41,6 +49,12 @@ public:
 	@brief Deletes the most recent state 
 	*/
 	void popLastState();
+
+
+	/**
+	@brief Removes the most recent state without deleting it
+	*/
+	void popLastStateWithoutDelete();
 
 	//Pass through functions that call the states internal functions
 
